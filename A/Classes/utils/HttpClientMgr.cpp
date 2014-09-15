@@ -1,4 +1,4 @@
-#include "HttpClientMgr.h"
+﻿#include "HttpClientMgr.h"
 #include "DataMgr.h"
 #include <string>
 USING_NS_CC;

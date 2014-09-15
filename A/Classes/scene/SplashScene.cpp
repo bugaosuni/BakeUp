@@ -1,4 +1,4 @@
-#include "SplashScene.h"
+﻿#include "SplashScene.h"
 #include "DataMgr.h"
 #include "MainScene.h"
 #include "UtilHelper.h"

@@ -1,4 +1,4 @@
-#include "MainScene.h"
+ï»¿#include "MainScene.h"
 #include "SelectMapScene.h"
 #include "GameOverDialog.h"
 #include "ExitDialog.h"
@@ -42,7 +42,7 @@ bool MainScene::init()
 
     if (DataMgr::bIsSpalshEnter)
     {
-        // ½øÈëÓÎÏ·µÄ¹ã¸æ
+        // è¿›å…¥æ¸¸æˆçš„å¹¿å‘Š
         UtilHelper::showStartAppAd(1);
         DataMgr::bIsSpalshEnter = false;
     }

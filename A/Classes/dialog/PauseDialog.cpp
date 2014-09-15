@@ -1,4 +1,4 @@
-#include "PauseDialog.h"
+﻿#include "PauseDialog.h"
 #include "UtilHelper.h"
 
 Scene* PauseDialog::createScene()

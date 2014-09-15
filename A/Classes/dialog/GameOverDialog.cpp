@@ -1,4 +1,4 @@
-#include "GameOverDialog.h"
+﻿#include "GameOverDialog.h"
 #include "DataMgr.h"
 #include "UtilHelper.h"
 

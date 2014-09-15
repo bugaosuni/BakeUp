@@ -1,4 +1,4 @@
-#include "UtilHelper.h"
+ï»¿#include "UtilHelper.h"
 #include "StringConst.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
@@ -14,7 +14,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 extern "C"
 {
-    //·½·¨ÃûÓëjavaÀàÖĞµÄ°üÃû+·½·¨Ãû£¬ÒÔÏÂ»®ÏßÁ¬½Ó
+    //æ–¹æ³•åä¸javaç±»ä¸­çš„åŒ…å+æ–¹æ³•åï¼Œä»¥ä¸‹åˆ’çº¿è¿æ¥
     void Java_com_gameworld_up_hill_racing_AppActivity_rate(JNIEnv*  env, jobject thiz, jboolean a)
     {
         UtilHelper::writeToBool(RATE, a);
@@ -25,7 +25,7 @@ extern "C"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 extern "C"
 {
-    //·½·¨ÃûÓëjavaÀàÖĞµÄ°üÃû+·½·¨Ãû£¬ÒÔÏÂ»®ÏßÁ¬½Ó
+    //æ–¹æ³•åä¸javaç±»ä¸­çš„åŒ…å+æ–¹æ³•åï¼Œä»¥ä¸‹åˆ’çº¿è¿æ¥
     void Java_com_gameworld_up_hill_racing_AppActivity_quit(JNIEnv*  env, jobject thiz, jboolean a)
     {
         umeng::MobClickCpp::end();
@@ -51,32 +51,32 @@ vector<AdConfData> UtilHelper::readAdConfData()
     auto path = FileUtils::getInstance()->getWritablePath();
     path.append("adConf.json");
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     vector<AdConfData> adConfData;
     adConfData.clear();
     if (data != "")
     {
         doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-        //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+        //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
         if (doc.HasParseError() || !doc.IsArray())  
         {  
             log("get json data err!"); 
         }
 
-        //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+        //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
         for(unsigned int i=1;i<doc.Size();i++)
         {  
-            //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+            //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
             rapidjson::Value &v=doc[i];  
             AdConfData adData;
 
-            //°´ÏÂ±êÌáÈ¡  
+            //æŒ‰ä¸‹æ ‡æå–  
             int a=0;
             adData.package = v[a++].GetString();
             adData.icon = v[a++].GetString();
@@ -91,7 +91,7 @@ vector<AdConfData> UtilHelper::getAdConfDataFromNet(string response)
 {
     rapidjson::Document doc;
     doc.Parse<rapidjson::kParseDefaultFlags>(response.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!"); 
@@ -100,14 +100,14 @@ vector<AdConfData> UtilHelper::getAdConfDataFromNet(string response)
 
     vector<AdConfData> adConfData;
     adConfData.clear();
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i];  
         AdConfData adData;
 
-        //°´ÏÂ±êÌáÈ¡  
+        //æŒ‰ä¸‹æ ‡æå–  
         int a=0;
         adData.package = v[a++].GetString();
         adData.icon = v[a++].GetString();
@@ -165,29 +165,29 @@ bool UtilHelper::screenShoot()
 {
     Size winSize = Director::getInstance()->getWinSize();
 
-    //¶¨ÒåÒ»¸öÆÁÄ»´óĞ¡µÄäÖÈ¾ÎÆÀí
+    //å®šä¹‰ä¸€ä¸ªå±å¹•å¤§å°çš„æ¸²æŸ“çº¹ç†
     RenderTexture* renderTexture = RenderTexture::create(winSize.width, winSize.height, Texture2D::PixelFormat::RGBA8888);
 
     Scene* curScene = Director::getInstance()->getRunningScene();
     //Point ancPos = curScene->getAnchorPoint();
 
-    //äÖÈ¾ÎÆÀí¿ªÊ¼²¶×½
+    //æ¸²æŸ“çº¹ç†å¼€å§‹æ•æ‰
     renderTexture->begin();
 
-    // ËõĞ¡ÆÁÄ»½ØÆÁÇøÓò
+    // ç¼©å°å±å¹•æˆªå±åŒºåŸŸ
     //curScene->setScale(0.5f);
     //curScene->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
 
-    //»æÖÆµ±Ç°³¡¾°
+    //ç»˜åˆ¶å½“å‰åœºæ™¯
     curScene->visit();
 
-    //½áÊø
+    //ç»“æŸ
     renderTexture->end();
 
-    //±£´æpng
+    //ä¿å­˜png
     renderTexture->saveToFile("screenshoot.png", Image::Format::PNG);
 
-    // »Ö¸´ÆÁÄ»³ß´ç
+    // æ¢å¤å±å¹•å°ºå¯¸
     //curScene->setScale(1.0f);
     //curScene->setAnchorPoint(ancPos);
 
@@ -203,16 +203,16 @@ bool UtilHelper::writeMapDataToSD()
     auto path = FileUtils::getInstance()->fullPathForFilename(filename);
     rapidjson::Document doc;
     doc.SetObject();
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -237,16 +237,16 @@ bool UtilHelper::updateMapDate()
 
     rapidjson::Document oldDoc;
     oldDoc.SetObject();
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(sdcardPath));
     {
         log("json file is not find [%s]",sdcardPath.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string oldData = FileUtils::getInstance()->getStringFromFile(sdcardPath);
     oldDoc.Parse<rapidjson::kParseDefaultFlags>(oldData.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (oldDoc.HasParseError() || !oldDoc.IsArray())  
     {  
         log("get json data err!");  
@@ -257,16 +257,16 @@ bool UtilHelper::updateMapDate()
 
     rapidjson::Document newDoc;
     newDoc.SetObject();
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(assertPath));
     {
         log("json file is not find [%s]",assertPath.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string newData = FileUtils::getInstance()->getStringFromFile(assertPath);
     newDoc.Parse<rapidjson::kParseDefaultFlags>(newData.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (newDoc.HasParseError() || !newDoc.IsArray())  
     {  
         log("get json data err!");  
@@ -275,7 +275,7 @@ bool UtilHelper::updateMapDate()
     int idIndex = 0;
 
 
-     //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+     //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<newDoc.Size();i++)
     {
         for(unsigned int j=1;j<oldDoc.Size();j++)
@@ -312,16 +312,16 @@ bool UtilHelper::writeCarDataToSD()
     auto path = FileUtils::getInstance()->fullPathForFilename(filename);
     rapidjson::Document doc;
     doc.SetObject();
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -346,16 +346,16 @@ bool UtilHelper::updateCarDate()
 
     rapidjson::Document oldDoc;
     oldDoc.SetObject();
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(sdcardPath));
     {
         log("json file is not find [%s]",sdcardPath.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string oldData = FileUtils::getInstance()->getStringFromFile(sdcardPath);
     oldDoc.Parse<rapidjson::kParseDefaultFlags>(oldData.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (oldDoc.HasParseError() || !oldDoc.IsArray())  
     {  
         log("get json data err!");  
@@ -366,16 +366,16 @@ bool UtilHelper::updateCarDate()
 
     rapidjson::Document newDoc;
     newDoc.SetObject();
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(assertPath));
     {
         log("json file is not find [%s]",assertPath.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string newData = FileUtils::getInstance()->getStringFromFile(assertPath);
     newDoc.Parse<rapidjson::kParseDefaultFlags>(newData.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (newDoc.HasParseError() || !newDoc.IsArray())  
     {  
         log("get json data err!");  
@@ -384,7 +384,7 @@ bool UtilHelper::updateCarDate()
     int idIndex = 0;
 
 
-     //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+     //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<newDoc.Size();i++)
     {
         for(unsigned int j=1;j<oldDoc.Size();j++)
@@ -420,16 +420,16 @@ map<string, string> UtilHelper::readTextData()
     string filename = "data/text.json";
     auto path = FileUtils::getInstance()->fullPathForFilename(filename);
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -437,13 +437,13 @@ map<string, string> UtilHelper::readTextData()
 
     map<string, string> textData;
     textData.clear();
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i];  
 
-        //°´ÏÂ±êÌáÈ¡  
+        //æŒ‰ä¸‹æ ‡æå–  
         int a=0;
         auto id = v[a++].GetInt();
         textData[v[a++].GetString()] = v[a++].GetString();
@@ -456,16 +456,16 @@ vector<MapData> UtilHelper::readMapData()
     auto path = FileUtils::getInstance()->getWritablePath();
     path.append("map.json");
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -473,14 +473,14 @@ vector<MapData> UtilHelper::readMapData()
 
     vector<MapData> mapData;
     mapData.clear();
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i];  
    
         MapData data;
-        //°´ÏÂ±êÌáÈ¡  
+        //æŒ‰ä¸‹æ ‡æå–  
         int a=0;  
         data.id=v[a++].GetInt();  
         data.name=v[a++].GetString();   
@@ -500,24 +500,24 @@ bool UtilHelper::writeMapData(int mapid, MapModType modType, int modData)
     path.append("map.json");
     rapidjson::Document doc;
     doc.SetObject();
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
     }
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-         //°´ÏÂ±êÌáÈ¡  
+         //æŒ‰ä¸‹æ ‡æå–  
          int a=0;  
          auto id=doc[i][a++].GetInt();  
          if (id == mapid)
@@ -543,25 +543,25 @@ bool UtilHelper::writeCarData(int carid, CarModType modType, int modData)
     path.append("car.json");
     rapidjson::Document doc;
     doc.SetObject();
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
     }
 
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //°´ÏÂ±êÌáÈ¡  
+        //æŒ‰ä¸‹æ ‡æå–  
         int a=0;  
         auto id=doc[i][a++].GetInt();  
         if (id == carid)
@@ -587,16 +587,16 @@ vector<CarData> UtilHelper::readCarData()
     auto path = FileUtils::getInstance()->getWritablePath();
     path.append("car.json");
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path))
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -604,14 +604,14 @@ vector<CarData> UtilHelper::readCarData()
 
     vector<CarData> carData;
     carData.clear();
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i];  
 
         CarData data;
-        //°´ÏÂ±êÌáÈ¡  
+        //æŒ‰ä¸‹æ ‡æå–  
         int a=0;  
         data.id=v[a++].GetInt();  
         data.name=v[a++].GetString();   
@@ -641,16 +641,16 @@ map<int, vector<PartCost>> UtilHelper::readPartCostData()
     string filename = "data/partCost.json";
     auto path = FileUtils::getInstance()->fullPathForFilename(filename);
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path))
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -661,15 +661,15 @@ map<int, vector<PartCost>> UtilHelper::readPartCostData()
     vector<PartCost> partCostVec;
     partCostVec.clear();
     auto carId = -1;
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i]; 
 
         PartCost data;
 
-        //°´ÏÂ±êÌáÈ¡  
+        //æŒ‰ä¸‹æ ‡æå–  
         int a=0;
         data.id = v[a++].GetInt();
         data.level = v[a++].GetInt();
@@ -706,16 +706,16 @@ vector<MapPoints> UtilHelper::readMapPointsData(int mapId)
     string filename = "data/mapPoints" + String::createWithFormat("%d",mapId)->_string +".json";
     auto path = FileUtils::getInstance()->fullPathForFilename(filename);
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(path))
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(path);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -724,10 +724,10 @@ vector<MapPoints> UtilHelper::readMapPointsData(int mapId)
     vector<MapPoints> mapPoints;
     mapPoints.clear();
 
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i];  
         int a = 0;
         MapPoints mapPoint;
@@ -742,16 +742,16 @@ vector<CarInfo> UtilHelper::readCarInfoData()
 {
     string filename = "data/carInfo.json";
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(filename))
     {
         log("json file is not find [%s]",filename.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(filename);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -760,10 +760,10 @@ vector<CarInfo> UtilHelper::readCarInfoData()
     vector<CarInfo> carInfos;
     carInfos.clear();
 
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i];  
         int a = 0;
         CarInfo carInfo;
@@ -811,16 +811,16 @@ vector<CarLevel> UtilHelper::readCarLevelData()
     
     string filename = "data/carLevel.json";
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(filename))
     {
         log("json file is not find [%s]",filename.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(filename);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
@@ -829,10 +829,10 @@ vector<CarLevel> UtilHelper::readCarLevelData()
     vector<CarLevel> carLevels;
     carLevels.clear();
 
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i];  
         int a = 0;
         CarLevel carLevel;
@@ -873,26 +873,26 @@ FileVersion UtilHelper::readFileVersionData()
 {
     string filename = "data/fileVersion.json";
     rapidjson::Document doc;
-    //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+    //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
     if (!FileUtils::getInstance()->isFileExist(filename))
     {
         log("json file is not find [%s]",filename.c_str());  
         //return false;  
     }
-    //¶ÁÈ¡ÎÄ¼ş£¬³õÊ¼»¯doc
+    //è¯»å–æ–‡ä»¶ï¼Œåˆå§‹åŒ–doc
     string data = FileUtils::getInstance()->getStringFromFile(filename);
     doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //ÅĞ¶Ï¶ÁÈ¡³É¹¦Óë·ñ ºÍ ÊÇ·ñÎªÊı×éÀàĞÍ  
+    //åˆ¤æ–­è¯»å–æˆåŠŸä¸å¦ å’Œ æ˜¯å¦ä¸ºæ•°ç»„ç±»å‹  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
         log("get json data err!");  
     }
 
     FileVersion fileVersion;
-    //´ÓµÚ2ĞĞ¿ªÊ¼£¬ÒòÎªµÚÒ»ĞĞÊÇÊôĞÔ  
+    //ä»ç¬¬2è¡Œå¼€å§‹ï¼Œå› ä¸ºç¬¬ä¸€è¡Œæ˜¯å±æ€§  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
-        //Öğ¸öÌáÈ¡Êı×éÔªËØ£¨ÉùÃ÷µÄ±äÁ¿±ØĞëÎªÒıÓÃ£©  
+        //é€ä¸ªæå–æ•°ç»„å…ƒç´ ï¼ˆå£°æ˜çš„å˜é‡å¿…é¡»ä¸ºå¼•ç”¨ï¼‰  
         rapidjson::Value &v=doc[i];  
         int a = 0;
         fileVersion.map_version = v[a++].GetInt();

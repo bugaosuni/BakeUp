@@ -1,4 +1,4 @@
-#include "SelectMapScene.h"
+ï»¿#include "SelectMapScene.h"
 #include "SelectCarScene.h"
 #include "ConfirmDialog.h"
 #include "UpgradeCarScene.h"
@@ -158,12 +158,12 @@ void SelectCarScene::initListView()
 
 void SelectCarScene::scrollListView(float offsetX)
 {
-    //for Ñ­»·±éÀúÈİÆ÷ÖĞµÄÃ¿¸ö¾«Áé  
+    //for å¾ªç¯éå†å®¹å™¨ä¸­çš„æ¯ä¸ªç²¾çµ  
     for( auto e : m_listView->getItems() )  
     {
         auto mask1 = Helper::seekWidgetByName(e, "Image_Mask");
-        auto pointX = e->getPositionX();//»ñµÃµ±Ç°¶ÔÏóµÄX×ø±ê£¨²»¹ÜÔõÃ´¹ö¶¯£¬Õâ¸ö×ø±ê¶¼ÊÇ²»±äµÄ£©  
-        float endPosX = pointX + offsetX;//½«¾«ÁéµÄ X×ø±ê + Æ«ÒÆX×ø±ê
+        auto pointX = e->getPositionX();//è·å¾—å½“å‰å¯¹è±¡çš„Xåæ ‡ï¼ˆä¸ç®¡æ€ä¹ˆæ»šåŠ¨ï¼Œè¿™ä¸ªåæ ‡éƒ½æ˜¯ä¸å˜çš„ï¼‰  
+        float endPosX = pointX + offsetX;//å°†ç²¾çµçš„ Xåæ ‡ + åç§»Xåæ ‡
 
         if( endPosX > 170 && endPosX <= 510 )  
         {  
@@ -173,9 +173,9 @@ void SelectCarScene::scrollListView(float offsetX)
         }  
         else if( endPosX > 510 && endPosX < 850 )   
         {  
-            //ÏÂÃæÕâ¸ö¹«Ê½²»ºÃ½âÊÍ£¬ÎÒ¾ÍÕâÃ´Ëµ°É£º  
-            //¼ÙÉè endPosX = 200£¬ÄÇÃ´·Å´ó±¶ÊıÓ¦¸ÃÊÇ 200 / 150 = 1.33×óÓÒ£¬ÄÇÃ´µ±endPosX = 300Ê±£¬³öÓÚ¶Ô³ÆµÄÔ­Àí£¬ÎÒÃÇÒÔ512Îª¶Ô³ÆÖĞĞÄ£¬ÄÇÃ´  
-            //300 µÄ·Å´ó±¶ÊıÒ²Ó¦¸ÃÊÇ 1.33¡£Õâ¾ÍÊÇÏÂÃæµÄ¹«Ê½ÓÉÀ´  
+            //ä¸‹é¢è¿™ä¸ªå…¬å¼ä¸å¥½è§£é‡Šï¼Œæˆ‘å°±è¿™ä¹ˆè¯´å§ï¼š  
+            //å‡è®¾ endPosX = 200ï¼Œé‚£ä¹ˆæ”¾å¤§å€æ•°åº”è¯¥æ˜¯ 200 / 150 = 1.33å·¦å³ï¼Œé‚£ä¹ˆå½“endPosX = 300æ—¶ï¼Œå‡ºäºå¯¹ç§°çš„åŸç†ï¼Œæˆ‘ä»¬ä»¥512ä¸ºå¯¹ç§°ä¸­å¿ƒï¼Œé‚£ä¹ˆ  
+            //300 çš„æ”¾å¤§å€æ•°ä¹Ÿåº”è¯¥æ˜¯ 1.33ã€‚è¿™å°±æ˜¯ä¸‹é¢çš„å…¬å¼ç”±æ¥  
             float a = endPosX - 510;  
             float b = 510 - a;  
 
@@ -185,7 +185,7 @@ void SelectCarScene::scrollListView(float offsetX)
         }  
         else  
         {  
-            //²»ÊÇÔÚÉÏÃæµÄ·¶Î§£¬ÔòÉèÖÃÎªÕı³£´óĞ¡  
+            //ä¸æ˜¯åœ¨ä¸Šé¢çš„èŒƒå›´ï¼Œåˆ™è®¾ç½®ä¸ºæ­£å¸¸å¤§å°  
             //e->setScale(1.0f);
         }  
     } 
@@ -223,8 +223,8 @@ void SelectCarScene::scrollViewCallBack(Ref* sender, ScrollviewEventType type)
 {
     m_scrolling = true;
     ListView* view = dynamic_cast<ListView*>(sender);
-    //ÔÚscrollViewÍÏ¶¯Ê±ÏìÓ¦¸Ãº¯Êı 
-    auto offsetPosX = view->getInnerContainer()->getPositionX();//»ñµÃÆ«ÒÆX×ø±ê(ÏòÓÒÒÆ¶¯£¬Æ«ÒÆÁ¿ÎªÕıÊı£¬Ïò×óÔòÎª¸ºÊı£©  
+    //åœ¨scrollViewæ‹–åŠ¨æ—¶å“åº”è¯¥å‡½æ•° 
+    auto offsetPosX = view->getInnerContainer()->getPositionX();//è·å¾—åç§»Xåæ ‡(å‘å³ç§»åŠ¨ï¼Œåç§»é‡ä¸ºæ­£æ•°ï¼Œå‘å·¦åˆ™ä¸ºè´Ÿæ•°ï¼‰  
 
     scrollListView(offsetPosX);
 }

@@ -1,4 +1,4 @@
-//
+ï»¿//
 //  GB2ShapeCache-x.cpp
 //  
 //  Loads physics sprites created with http://www.PhysicsEditor.de
@@ -140,7 +140,7 @@ void GB2ShapeCache::addShapesWithFile(const std::string &plist) {
 
     DictElement *pEbody = bodyData->_elements;;
     
-    while (pEbody) //½âÎö¸ÕÌå
+    while (pEbody) //è§£æžåˆšä½“
     {
         BodyDef *bodyDef = new BodyDef();
         bodyName = pEbody->getStrKey();

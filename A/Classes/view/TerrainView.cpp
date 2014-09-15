@@ -1,4 +1,4 @@
-#include "TerrainView.h"
+ï»¿#include "TerrainView.h"
 #include "VisibleRect.h"
 #include "GameScene.h"
 
@@ -86,7 +86,7 @@ void TerrainView::onDraw(const Mat4 &transform, bool transformUpdated)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)m_nMapVertices);
 
 
-    // µ÷ÊÔÎïÀíÒıÇæÊ¹ÓÃ
+    // è°ƒè¯•ç‰©ç†å¼•æ“ä½¿ç”¨
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -132,7 +132,7 @@ void TerrainView::resetHillVertices()
 
     if (prevFromKeyPointI != m_nFromKeyPoint || prevToKeyPointI != m_nToKeyPoint)
     {
-        // ÆÁÄ»ÏÔÊ¾ÇøÓò
+        // å±å¹•æ˜¾ç¤ºåŒºåŸŸ
         m_nMapVertices = 0;
         m_nBorderVertices = 0;
         Vec2 p0, p1, pt0, pt1;
@@ -175,14 +175,14 @@ void TerrainView::resetHillVertices()
                 pt1.y = ymid + ampl * cosf(da * j);
                 m_arrfBorderVertices[m_nBorderVertices++] = pt1;
 
-                 // ÍÁÈÀ
+                 // åœŸå£¤
                 m_arrfGroundVertices[m_nMapVertices] = Vec2(pt0.x, pt0.y - 512);
                 m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt0.x / 512, 1.0f);
-                // ²İÆº
+                // è‰åª
                 m_arrfSurfaceVertices[m_nMapVertices] = Vec2(pt0.x, pt0.y - 32);
                 m_arrfSurfaceTexCoords[m_nMapVertices] = Vec2(pt0.x / 512, 1.0f);
 
-                // ÏÂÒ»¸öµã
+                // ä¸‹ä¸€ä¸ªç‚¹
                 m_nMapVertices += 1;
 
                 m_arrfGroundVertices[m_nMapVertices] = Vec2(pt1.x, pt1.y - 512);
