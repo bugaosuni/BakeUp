@@ -312,7 +312,7 @@ void SelectMapScene::refreshUI()
     auto index = DataMgr::mapIndex;
     if (UtilHelper::writeMapData(index + 1, e_map_open, 1))
     {
-        auto cell = m_listView->getItem(index);
+        auto cell = m_listView->getItem(index + 1);
         //open info
         auto panelMask = Helper::seekWidgetByName(cell, "Panel_Mask");
         auto bitmapLabelInfo = Helper::seekWidgetByName(cell, "BitmapLabel_Info");

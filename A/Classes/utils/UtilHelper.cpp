@@ -141,7 +141,7 @@ void UtilHelper::showStartAppAd(int type)
 void UtilHelper::showOwnAds(int type, string pkg)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	umeng::MobClickCpp::event("click_ad", pkg.c_str());
+    umeng::MobClickCpp::event("click_ad", pkg.c_str());
 
     JniMethodInfo t;
     if(JniHelper::getStaticMethodInfo(t, "com/gameworld/up/hill/racing/AppActivity", "showOwnAds", "(ILjava/lang/String;)V"))
@@ -204,7 +204,7 @@ bool UtilHelper::writeMapDataToSD()
     rapidjson::Document doc;
     doc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path))
+    if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
@@ -238,7 +238,7 @@ bool UtilHelper::updateMapDate()
     rapidjson::Document oldDoc;
     oldDoc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(sdcardPath))
+    if (!FileUtils::getInstance()->isFileExist(sdcardPath));
     {
         log("json file is not find [%s]",sdcardPath.c_str());  
         //return false;  
@@ -258,7 +258,7 @@ bool UtilHelper::updateMapDate()
     rapidjson::Document newDoc;
     newDoc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(assertPath))
+    if (!FileUtils::getInstance()->isFileExist(assertPath));
     {
         log("json file is not find [%s]",assertPath.c_str());  
         //return false;  
@@ -313,7 +313,7 @@ bool UtilHelper::writeCarDataToSD()
     rapidjson::Document doc;
     doc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path))
+    if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
@@ -347,7 +347,7 @@ bool UtilHelper::updateCarDate()
     rapidjson::Document oldDoc;
     oldDoc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(sdcardPath))
+    if (!FileUtils::getInstance()->isFileExist(sdcardPath));
     {
         log("json file is not find [%s]",sdcardPath.c_str());  
         //return false;  
@@ -367,7 +367,7 @@ bool UtilHelper::updateCarDate()
     rapidjson::Document newDoc;
     newDoc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(assertPath))
+    if (!FileUtils::getInstance()->isFileExist(assertPath));
     {
         log("json file is not find [%s]",assertPath.c_str());  
         //return false;  
@@ -457,7 +457,7 @@ vector<MapData> UtilHelper::readMapData()
     path.append("map.json");
     rapidjson::Document doc;
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path))
+    if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
@@ -501,7 +501,7 @@ bool UtilHelper::writeMapData(int mapid, MapModType modType, int modData)
     rapidjson::Document doc;
     doc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path))
+    if (!FileUtils::getInstance()->isFileExist(path));
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  

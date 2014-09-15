@@ -520,7 +520,7 @@ void GameScene::update(float dt)
         m_nCurrentDistance = 1000;
         m_overtype = MAP_COMPLETE;
         m_bIsGameOver = true;
-        scheduleOnce( schedule_selector(GameScene::gameOver), 2.0f);
+        scheduleOnce( schedule_selector(GameScene::gameOver), 1.0f);
     }
 
     this->pickUpItems();
@@ -592,7 +592,7 @@ void GameScene::speedUp(float dt)
     }
     else if (m_fRearWheelSpeed > -100.0f)
     {
-         m_fRearWheelSpeed -= (5.0f + m_nEngineLevel);
+         m_fRearWheelSpeed -= (5.0f + m_nEngineLevel * 2);
     }
 
     this->setWheelSpeed();
@@ -607,7 +607,7 @@ void GameScene::speedDown(float dt)
     }
     else if (m_fRearWheelSpeed < 50.0f)
     {
-        m_fRearWheelSpeed += (5.0f + m_nEngineLevel);
+        m_fRearWheelSpeed += (5.0f + m_nEngineLevel * 2);
     }
 
    
@@ -636,7 +636,7 @@ void GameScene::pickUpItems()
     
     auto coin1 = m_pTerrainView->getChildByTag(SPRITE_COIN1);
 
-    if (coin1 && rCar.intersectsRect(coin1->getBoundingBox()))
+    if (coin1 && (rCar.intersectsRect(coin1->getBoundingBox()) || coin1->getPositionX() < rCar.getMidX()))
     {
         Action* coin_action1 = Sequence::create(
             MoveBy::create(0.2, Vec2(200 / PTM_RATIO, 150 / PTM_RATIO)),
@@ -648,7 +648,7 @@ void GameScene::pickUpItems()
     }
 
     auto coin2 = m_pTerrainView->getChildByTag(SPRITE_COIN2);
-    if (coin2 && rCar.intersectsRect(coin2->getBoundingBox()))
+    if (coin2 && (rCar.intersectsRect(coin2->getBoundingBox()) || coin2->getPositionX() < rCar.getMidX()))
     {
         Action* coin_action2 = Sequence::create(
         MoveBy::create(0.2, Vec2(200 / PTM_RATIO, 150 / PTM_RATIO)),
@@ -660,7 +660,7 @@ void GameScene::pickUpItems()
     }
 
     auto coin3 = m_pTerrainView->getChildByTag(SPRITE_COIN3);
-    if (coin3 && rCar.intersectsRect(coin3->getBoundingBox()))
+    if (coin3 && (rCar.intersectsRect(coin3->getBoundingBox()) || coin3->getPositionX() < rCar.getMidX()))
     {
         Action* coin_action3 = Sequence::create(
         MoveBy::create(0.2, Vec2(200 / PTM_RATIO, 150 / PTM_RATIO)),
@@ -672,7 +672,7 @@ void GameScene::pickUpItems()
     }
 
     auto coin4 = m_pTerrainView->getChildByTag(SPRITE_COIN4);
-    if (coin4 && rCar.intersectsRect(coin4->getBoundingBox()))
+    if (coin4 && (rCar.intersectsRect(coin4->getBoundingBox()) || coin4->getPositionX() < rCar.getMidX()))
     {
         Action* coin_action4 = Sequence::create(
         MoveBy::create(0.2, Vec2(200 / PTM_RATIO, 150 / PTM_RATIO)),
@@ -710,16 +710,16 @@ void GameScene::consumGas(float dt)
 void GameScene::updateNeedleRotation()
 {
     float speedRotation = -90;
-    speedRotation +=  fabs(m_pRearWheelJoint->GetJointSpeed()) * 3;
+    speedRotation +=  fabs(m_pRearWheelJoint->GetJointSpeed());
     if (speedRotation > 80)
     {
-        speedRotation = 70;
+        speedRotation = 80;
     }
     auto speed_actionTo = RotateTo::create(0.2, speedRotation);
     m_pSpeedNeedle->runAction( Sequence::create(speed_actionTo, NULL));
 
     float boostRotation = -90;
-    boostRotation +=  m_fPressPedalTime * 10;
+    boostRotation +=  m_fPressPedalTime * 20;
     if (boostRotation > 50)
     {
         boostRotation = 50;
@@ -744,11 +744,10 @@ void GameScene::updateLables()
 void GameScene::gameOver(float dt)
 {
     UtilHelper::writeToInteger(OVER_COUNT, UtilHelper::getFromInteger(OVER_COUNT) + 1);
-    if (UtilHelper::getFromInteger(OVER_COUNT) % 3 == 0)
-    {
-        UtilHelper::showStartAppAd(1);
-    }
-    else if (UtilHelper::getFromInteger(OVER_COUNT) % 2 == 0 && !UtilHelper::getFromBool(RATE))
+
+    UtilHelper::showStartAppAd(1);
+
+    if (UtilHelper::getFromInteger(OVER_COUNT) % 2 == 0 && !UtilHelper::getFromBool(RATE))
     {
         UtilHelper::showStartAppAd(3);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -895,7 +894,7 @@ void GameScene::mapTestOffset()
 void GameScene::setWheelSpeed()
 {
      m_pRearWheelJoint->SetMotorSpeed(m_fRearWheelSpeed);
-     m_pFrontWheelJoint->SetMotorSpeed(m_fRearWheelSpeed);
+     m_pFrontWheelJoint->SetMotorSpeed(m_fRearWheelSpeed / 2.0);
 }
 
 void GameScene::setWheelEnableMotor(bool bIsPress)

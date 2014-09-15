@@ -322,8 +322,9 @@ void TerrainView::addCoins(const Vec2 pt)
     int count = rand() % 4 + 1;
     for (int i = 0 ; i < count ; i++)
     {
-        auto coinSprite = Sprite::createWithSpriteFrameName("coin" + String::createWithFormat("%d",i + 1)->_string + ".png");
-        coinSprite->setTag(SPRITE_COIN1 + i);
+        int value = rand() % 4 + 1;
+        auto coinSprite = Sprite::createWithSpriteFrameName("coin" + String::createWithFormat("%d",value)->_string + ".png");
+        coinSprite->setTag(SPRITE_COIN1 + value - 1);
         coinSprite->setPosition(pt.x + i * 60, (pt.y + 30 + (m_fCoinOffset * 30) * i));
         this->addChild(coinSprite);
     }

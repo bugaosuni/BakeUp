@@ -315,7 +315,7 @@ void SelectCarScene::refreshUI()
     auto index = DataMgr::carIndex;
     if (UtilHelper::writeCarData(index + 1, e_car_open, 1))
     {
-        auto cell = m_listView->getItem(index);
+        auto cell = m_listView->getItem(index + 1);
         //open info
         auto panelMask = Helper::seekWidgetByName(cell, "Panel_Mask");
         auto bitmapLabelInfo = Helper::seekWidgetByName(cell, "BitmapLabel_Info");
