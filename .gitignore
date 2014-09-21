@@ -34,3 +34,10 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+# My gnore files
+A/google-play-services_lib/*
+A/cocos2d/*
+A/proj.wp8-xaml/*
+A/proj.linux/*
+A/publish/*

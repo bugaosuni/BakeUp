@@ -57,11 +57,11 @@ bool DataMgr::initGameData()
 
     m_adConfData =  UtilHelper::readAdConfData();
     readAdConfData();
-    if (UtilHelper::getFromBool(WRITE_DATA))
+    if (!UtilHelper::getFromBool(WRITE_DATA))
     {
         if (UtilHelper::writeMapDataToSD() && UtilHelper::writeCarDataToSD())
         {
-            UtilHelper::writeToInteger(USER_GOLD, 2000000);
+            UtilHelper::writeToInteger(USER_GOLD, 2000);
             UtilHelper::writeToBool(WRITE_DATA, true);
         }
     }
