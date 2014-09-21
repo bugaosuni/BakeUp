@@ -1,4 +1,4 @@
-ï»¿#include "SelectMapScene.h"
+#include "SelectMapScene.h"
 #include "SelectCarScene.h"
 #include "ConfirmDialog.h"
 #include "MainScene.h"
@@ -54,7 +54,7 @@ void SelectMapScene::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event)
     {
         if (!DataMgr::modalShow)
         {
-            Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MainScene::createScene()));
+            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.5f, MainScene::createScene()));
         }
     }
 }
@@ -157,12 +157,12 @@ void SelectMapScene::initListView()
 
 void SelectMapScene::scrollListView(float offsetX)
 {
-    //for å¾ªçŽ¯éåŽ†å®¹å™¨ä¸­çš„æ¯ä¸ªç²¾çµ  
+    //for Ñ­»·±éÀúÈÝÆ÷ÖÐµÄÃ¿¸ö¾«Áé  
     for( auto e : m_listView->getItems() )  
     {
         auto mask1 = Helper::seekWidgetByName(e, "Image_Mask");
-        auto pointX = e->getPositionX();//èŽ·å¾—å½“å‰å¯¹è±¡çš„Xåæ ‡ï¼ˆä¸ç®¡æ€Žä¹ˆæ»šåŠ¨ï¼Œè¿™ä¸ªåæ ‡éƒ½æ˜¯ä¸å˜çš„ï¼‰  
-        float endPosX = pointX + offsetX;//å°†ç²¾çµçš„ Xåæ ‡ + åç§»Xåæ ‡
+        auto pointX = e->getPositionX();//»ñµÃµ±Ç°¶ÔÏóµÄX×ø±ê£¨²»¹ÜÔõÃ´¹ö¶¯£¬Õâ¸ö×ø±ê¶¼ÊÇ²»±äµÄ£©  
+        float endPosX = pointX + offsetX;//½«¾«ÁéµÄ X×ø±ê + Æ«ÒÆX×ø±ê
 
         if( endPosX > 170 && endPosX <= 510 )  
         {  
@@ -172,9 +172,9 @@ void SelectMapScene::scrollListView(float offsetX)
         }  
         else if( endPosX > 510 && endPosX < 850 )   
         {  
-            //ä¸‹é¢è¿™ä¸ªå…¬å¼ä¸å¥½è§£é‡Šï¼Œæˆ‘å°±è¿™ä¹ˆè¯´å§ï¼š  
-            //å‡è®¾ endPosX = 200ï¼Œé‚£ä¹ˆæ”¾å¤§å€æ•°åº”è¯¥æ˜¯ 200 / 150 = 1.33å·¦å³ï¼Œé‚£ä¹ˆå½“endPosX = 300æ—¶ï¼Œå‡ºäºŽå¯¹ç§°çš„åŽŸç†ï¼Œæˆ‘ä»¬ä»¥512ä¸ºå¯¹ç§°ä¸­å¿ƒï¼Œé‚£ä¹ˆ  
-            //300 çš„æ”¾å¤§å€æ•°ä¹Ÿåº”è¯¥æ˜¯ 1.33ã€‚è¿™å°±æ˜¯ä¸‹é¢çš„å…¬å¼ç”±æ¥  
+            //ÏÂÃæÕâ¸ö¹«Ê½²»ºÃ½âÊÍ£¬ÎÒ¾ÍÕâÃ´Ëµ°É£º  
+            //¼ÙÉè endPosX = 200£¬ÄÇÃ´·Å´ó±¶ÊýÓ¦¸ÃÊÇ 200 / 150 = 1.33×óÓÒ£¬ÄÇÃ´µ±endPosX = 300Ê±£¬³öÓÚ¶Ô³ÆµÄÔ­Àí£¬ÎÒÃÇÒÔ512Îª¶Ô³ÆÖÐÐÄ£¬ÄÇÃ´  
+            //300 µÄ·Å´ó±¶ÊýÒ²Ó¦¸ÃÊÇ 1.33¡£Õâ¾ÍÊÇÏÂÃæµÄ¹«Ê½ÓÉÀ´  
             float a = endPosX - 510;  
             float b = 510 - a;  
 
@@ -184,7 +184,7 @@ void SelectMapScene::scrollListView(float offsetX)
         }  
         else  
         {  
-            //ä¸æ˜¯åœ¨ä¸Šé¢çš„èŒƒå›´ï¼Œåˆ™è®¾ç½®ä¸ºæ­£å¸¸å¤§å°  
+            //²»ÊÇÔÚÉÏÃæµÄ·¶Î§£¬ÔòÉèÖÃÎªÕý³£´óÐ¡  
             //e->setScale(1.0f);
         }  
     } 
@@ -197,7 +197,7 @@ void SelectMapScene::backCallback(Ref* sender,TouchEventType type)
     case TOUCH_EVENT_ENDED:
         {
             AudioEnginMgr::getInstance()->playBtnEffect();
-            Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MainScene::createScene()));
+            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.5f, MainScene::createScene()));
         }
         break;
     default:
@@ -222,8 +222,8 @@ void SelectMapScene::scrollViewCallBack(Ref* sender, ScrollviewEventType type)
 {
     m_scrolling = true;
     ListView* view = dynamic_cast<ListView*>(sender);
-    //åœ¨scrollViewæ‹–åŠ¨æ—¶å“åº”è¯¥å‡½æ•°  
-    auto offsetPosX = view->getInnerContainer()->getPositionX();//èŽ·å¾—åç§»Xåæ ‡(å‘å³ç§»åŠ¨ï¼Œåç§»é‡ä¸ºæ­£æ•°ï¼Œå‘å·¦åˆ™ä¸ºè´Ÿæ•°ï¼‰  
+    //ÔÚscrollViewÍÏ¶¯Ê±ÏìÓ¦¸Ãº¯Êý  
+    auto offsetPosX = view->getInnerContainer()->getPositionX();//»ñµÃÆ«ÒÆX×ø±ê(ÏòÓÒÒÆ¶¯£¬Æ«ÒÆÁ¿ÎªÕýÊý£¬Ïò×óÔòÎª¸ºÊý£©  
 
     scrollListView(offsetPosX);
 }
@@ -277,7 +277,7 @@ void SelectMapScene::selectEvent()
     DataMgr::mapIndex = m_selectedIndex - 1;
     if (DataMgr::getInstance()->getMapData()[DataMgr::mapIndex].open == 1)
     {
-        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, SelectCarScene::createScene()));
+        Director::getInstance()->replaceScene(TransitionSlideInR::create(0.5f, SelectCarScene::createScene()));
     }
     else
     {

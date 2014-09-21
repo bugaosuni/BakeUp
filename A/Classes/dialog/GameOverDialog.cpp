@@ -1,4 +1,4 @@
-﻿#include "GameOverDialog.h"
+#include "GameOverDialog.h"
 #include "DataMgr.h"
 #include "UtilHelper.h"
 
@@ -92,9 +92,10 @@ void GameOverDialog::showScreenshot(float dt)
 	{
 		sp->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
 		sp->setPosition(size.width / 2, size.height / 2);
+		sp->setRotation(15);
 		sp->setScale(0);
 		panelScreenshot->addChild(sp);
-		sp->runAction(Spawn::createWithTwoActions(RotateTo::create(0.5f, -1095), ScaleTo::create(0.5f, 0.4f)));
+		sp->runAction(EaseBackOut::create(ScaleTo::create(0.5f, 0.4f)));
 	}
 }
 

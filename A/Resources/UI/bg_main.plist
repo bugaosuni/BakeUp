@@ -20,67 +20,15 @@
             <key>main_btn_play.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,815},{251,100}}</string>
+                <string>{{2,578},{253,100}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{251,100}}</string>
+                <string>{{0,0},{253,100}}</string>
                 <key>sourceSize</key>
-                <string>{251,100}</string>
-            </dict>
-            <key>main_cloud1.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{604,698},{262,115}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{262,115}}</string>
-                <key>sourceSize</key>
-                <string>{262,115}</string>
-            </dict>
-            <key>main_cloud2.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{604,578},{262,118}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{262,118}}</string>
-                <key>sourceSize</key>
-                <string>{262,118}</string>
-            </dict>
-            <key>main_cloud3.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{868,578},{144,86}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{144,86}}</string>
-                <key>sourceSize</key>
-                <string>{144,86}</string>
-            </dict>
-            <key>main_title.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,578},{600,129}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{600,129}}</string>
-                <key>sourceSize</key>
-                <string>{600,129}</string>
+                <string>{253,100}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -92,7 +40,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:365792827d1dff592ae4e7e805d97cde:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:b5036a434afb78787e2d4c0ac0cbcc0d:1/1$</string>
             <key>textureFileName</key>
             <string>bg_main.png</string>
         </dict>

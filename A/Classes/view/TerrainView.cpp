@@ -1,4 +1,4 @@
-Ôªø#include "TerrainView.h"
+#include "TerrainView.h"
 #include "VisibleRect.h"
 #include "GameScene.h"
 
@@ -86,7 +86,7 @@ void TerrainView::onDraw(const Mat4 &transform, bool transformUpdated)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)m_nMapVertices);
 
 
-    // Ë∞ÉËØïÁâ©ÁêÜÂºïÊìé‰ΩøÁî®
+    // µ˜ ‘ŒÔ¿Ì“˝«Ê π”√
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -132,7 +132,7 @@ void TerrainView::resetHillVertices()
 
     if (prevFromKeyPointI != m_nFromKeyPoint || prevToKeyPointI != m_nToKeyPoint)
     {
-        // Â±èÂπïÊòæÁ§∫Âå∫Âüü
+        // ∆¡ƒªœ‘ æ«¯”Ú
         m_nMapVertices = 0;
         m_nBorderVertices = 0;
         Vec2 p0, p1, pt0, pt1;
@@ -175,32 +175,36 @@ void TerrainView::resetHillVertices()
                 pt1.y = ymid + ampl * cosf(da * j);
                 m_arrfBorderVertices[m_nBorderVertices++] = pt1;
 
-                 // ÂúüÂ£§
-                m_arrfGroundVertices[m_nMapVertices] = Vec2(pt0.x, pt0.y - 512);
+                float fTexCoords_pt0 = float(pt0.y - 200) / 512;
+                float fTexCoords_pt1 = float(pt1.y - 200) / 512;
+
+                 // Õ¡»¿
+                m_arrfGroundVertices[m_nMapVertices] = Vec2(pt0.x,  -312);
                 m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt0.x / 512, 1.0f);
-                // ËçâÂù™
+                // ≤›∆∫
                 m_arrfSurfaceVertices[m_nMapVertices] = Vec2(pt0.x, pt0.y - 32);
                 m_arrfSurfaceTexCoords[m_nMapVertices] = Vec2(pt0.x / 512, 1.0f);
 
-                // ‰∏ã‰∏Ä‰∏™ÁÇπ
+                // œ¬“ª∏ˆµ„
                 m_nMapVertices += 1;
 
-                m_arrfGroundVertices[m_nMapVertices] = Vec2(pt1.x, pt1.y - 512);
+                m_arrfGroundVertices[m_nMapVertices] = Vec2(pt1.x, -312);
                 m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt1.x / 512, 1.0f);
                 m_arrfSurfaceVertices[m_nMapVertices] = Vec2(pt1.x, pt1.y - 32);
                 m_arrfSurfaceTexCoords[m_nMapVertices] = Vec2(pt1.x / 512, 1.0f);
 
-                 m_nMapVertices += 1;
-
+                m_nMapVertices += 1;
+                
+            
                 m_arrfGroundVertices[m_nMapVertices] = Vec2(pt0.x, pt0.y - 16);
-                m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt0.x / 512, 0);
+                m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt0.x / 512, 0 - fTexCoords_pt0);
                 m_arrfSurfaceVertices[m_nMapVertices] = Vec2(pt0.x, pt0.y);
                 m_arrfSurfaceTexCoords[m_nMapVertices] = Vec2(pt0.x / 512, 0);
 
                  m_nMapVertices += 1;
 
                 m_arrfGroundVertices[m_nMapVertices] = Vec2(pt1.x, pt1.y - 16);
-                m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt1.x / 512, 0);
+                m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt1.x / 512, 0- fTexCoords_pt1);
                 m_arrfSurfaceVertices[m_nMapVertices] = Vec2(pt1.x, pt1.y);
                 m_arrfSurfaceTexCoords[m_nMapVertices] = Vec2(pt1.x / 512, 0);
 

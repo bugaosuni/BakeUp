@@ -20,19 +20,6 @@
             <key>car2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{339,254},{335,250}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{335,250}}</string>
-                <key>sourceSize</key>
-                <string>{335,250}</string>
-            </dict>
-            <key>car3.png</key>
-            <dict>
-                <key>frame</key>
                 <string>{{339,2},{335,250}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
@@ -43,20 +30,7 @@
                 <key>sourceSize</key>
                 <string>{335,250}</string>
             </dict>
-            <key>car4.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,254},{335,250}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{335,250}}</string>
-                <key>sourceSize</key>
-                <string>{335,250}</string>
-            </dict>
-            <key>car5.png</key>
+            <key>car3.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{335,250}}</string>
@@ -77,9 +51,9 @@
             <key>realTextureFileName</key>
             <string>car.png</string>
             <key>size</key>
-            <string>{1024,512}</string>
+            <string>{1024,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:ccfa73c5689ec228d68240288a35500e:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:654126d7d53fb878c15cac9da29f934d:1/1$</string>
             <key>textureFileName</key>
             <string>car.png</string>
         </dict>

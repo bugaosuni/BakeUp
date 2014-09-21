@@ -1,4 +1,4 @@
-ï»¿#include "MainScene.h"
+#include "MainScene.h"
 #include "SelectMapScene.h"
 #include "GameOverDialog.h"
 #include "ExitDialog.h"
@@ -42,7 +42,8 @@ bool MainScene::init()
 
     if (DataMgr::bIsSpalshEnter)
     {
-        // è¿›å…¥æ¸¸æˆçš„å¹¿å‘Š
+		// ½øÈëÓÎÏ·µÄ¹ã¸æ
+		UtilHelper::showStartAppAd(5);
         UtilHelper::showStartAppAd(1);
         DataMgr::bIsSpalshEnter = false;
     }
@@ -59,7 +60,7 @@ void MainScene::initUI()
     auto buttonPlay = Helper::seekWidgetByName(m_view, "Button_Play");
     buttonPlay->addTouchEventListener(this, toucheventselector(MainScene::playCallBack));
 
-	addOwnAds();
+    addOwnAds();
 }
 
 void MainScene::playCallBack(Ref* sender, TouchEventType type)
@@ -68,7 +69,7 @@ void MainScene::playCallBack(Ref* sender, TouchEventType type)
     {
     case TOUCH_EVENT_ENDED:
         AudioEnginMgr::getInstance()->playBtnEffect();
-        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, SelectMapScene::createScene()));
+        Director::getInstance()->replaceScene(TransitionSlideInR::create(0.5f, SelectMapScene::createScene()));
         break;
     default:
         break;

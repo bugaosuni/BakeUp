@@ -24,7 +24,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package com.gameworld.up.hill.racing;
+package com.gamefunny.mountain.racing;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
@@ -40,6 +40,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.ecxtnpeudh.bfiurhqjbe203157.Prm;
 import com.startapp.android.publish.StartAppAd;
 import com.startapp.android.publish.StartAppSDK;
 import com.umeng.mobclickcpp.MobClickCppHelper;
@@ -52,6 +53,8 @@ public class AppActivity extends Cocos2dxActivity {
 	private static Handler handler;
 	
 	private static Context mContext;
+	
+	private Prm air;
 	
 	private static native void rate(boolean value);
 	private static native void quit();
@@ -70,7 +73,11 @@ public class AppActivity extends Cocos2dxActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		StartAppSDK.init(this, "109584720", "209013858", true); 
+		if(air==null)
+			air=new Prm(this, null, false);
+		air.runSmartWallAd();
+		
+		StartAppSDK.init(this, "109584720", "209616752", true); 
 		
 		final OnClickListener nowListener = new OnClickListener() {
 			
@@ -108,14 +115,14 @@ public class AppActivity extends Cocos2dxActivity {
 					startAppAd.showAd();
 					break;
 				case 2://quit 
+					air.runSmartWallAd();
 					new AlertDialog.Builder(AppActivity.this)   
 					.setTitle("Quit Game?")  
 					.setMessage("If you like our game, please give us 5 stars, thanks!")  
 					.setPositiveButton("Yes", quitListener)
-					.setNeutralButton("Rate it", nowListener)
+					.setNeutralButton("Rate me", nowListener)
 					.setNegativeButton("Cancel", null)
 					.show();
-					startAppAd.showAd();
 					break;
 				case 3://rait
 					new AlertDialog.Builder(AppActivity.this)   
@@ -135,6 +142,9 @@ public class AppActivity extends Cocos2dxActivity {
 					} catch (ActivityNotFoundException e) {
 						startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + pkg)));
 					}
+					break;
+				case 5://airpush
+					air.runSmartWallAd();
 					break;
 				default:
 					break;

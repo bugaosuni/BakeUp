@@ -7,20 +7,7 @@
             <key>map1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{676,506},{335,250}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{335,250}}</string>
-                <key>sourceSize</key>
-                <string>{335,250}</string>
-            </dict>
-            <key>map10.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{339,506},{335,250}}</string>
+                <string>{{339,254},{335,250}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,7 +20,7 @@
             <key>map2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{676,254},{335,250}}</string>
+                <string>{{2,758},{335,250}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -46,7 +33,7 @@
             <key>map3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{339,254},{335,250}}</string>
+                <string>{{2,506},{335,250}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -59,7 +46,7 @@
             <key>map4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,758},{335,250}}</string>
+                <string>{{2,254},{335,250}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -72,7 +59,7 @@
             <key>map5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,506},{335,250}}</string>
+                <string>{{676,2},{335,250}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -85,32 +72,6 @@
             <key>map6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,254},{335,250}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{335,250}}</string>
-                <key>sourceSize</key>
-                <string>{335,250}</string>
-            </dict>
-            <key>map7.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{676,2},{335,250}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{335,250}}</string>
-                <key>sourceSize</key>
-                <string>{335,250}</string>
-            </dict>
-            <key>map8.png</key>
-            <dict>
-                <key>frame</key>
                 <string>{{339,2},{335,250}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
@@ -121,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{335,250}</string>
             </dict>
-            <key>map9.png</key>
+            <key>map7.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{335,250}}</string>
@@ -144,7 +105,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e8fc9dfc374b985fdaaf6df60159173a:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:717d9a28a66f4b965ddd74bd790505f3:1/1$</string>
             <key>textureFileName</key>
             <string>map.png</string>
         </dict>

@@ -1,4 +1,4 @@
-﻿#include "ConfirmDialog.h"
+#include "ConfirmDialog.h"
 #include "UtilHelper.h"
 
 Scene* ConfirmDialog::createScene()

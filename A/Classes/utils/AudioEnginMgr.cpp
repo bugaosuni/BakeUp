@@ -1,4 +1,4 @@
-﻿#include "AudioEnginMgr.h"
+#include "AudioEnginMgr.h"
 #include "SimpleAudioEngine.h"
 #include "UtilHelper.h"
 #include "StringConst.h"

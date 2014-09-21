@@ -1,4 +1,4 @@
-﻿#include "UpgradeCarScene.h"
+#include "UpgradeCarScene.h"
 #include "UtilHelper.h"
 #include "SelectCarScene.h"
 #include "GameScene.h"
@@ -58,7 +58,7 @@ void UpgradeCarScene::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event
     {
         if (!DataMgr::modalShow)
         {
-            Director::getInstance()->replaceScene(TransitionFade::create(0.5f, SelectCarScene::createScene()));
+            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.5f, SelectCarScene::createScene()));
         }
     }
 }
@@ -93,9 +93,7 @@ void UpgradeCarScene::initUI()
 
     //panel_desc
     auto panelDesc = Helper::seekWidgetByName(m_view, "Panel_Desc");
-	panelDesc->setPositionX(panelPart->getPositionX() * 2 + panelPart->getSize().width);
-	panelDesc->setSize(Size(panelRoot->getSize().width - panelPart->getPositionX() * 3 - panelPart->getSize().width, panelDesc->getSize().height));
-    auto size = panelDesc->getSize();
+	auto size = panelDesc->getSize();
 
     //upgrade type
     m_bitmapLabelUpgrade = Helper::seekWidgetByName(m_view, "BitmapLabel_Upgrade");
@@ -106,7 +104,7 @@ void UpgradeCarScene::initUI()
     sprintf(ch, "%s_desc", m_partData[e_type1].name.c_str());
     m_labelDesc = Label::createWithBMFont("UI/font/number_24.fnt", DataMgr::getInstance()->getTextData()[ch].c_str(), TextHAlignment::LEFT, size.width * 0.94f);
     m_labelDesc->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-    m_labelDesc->setPosition(size.width * 0.03f, size.height * 0.8f);
+    m_labelDesc->setPosition(size.width * 0.03f, size.height * 0.7f);
     panelDesc->addChild(m_labelDesc);
 
     //button upgrade
@@ -388,7 +386,7 @@ void UpgradeCarScene::backCallback(Ref* sender,TouchEventType type)
     case TOUCH_EVENT_ENDED:
         {
             AudioEnginMgr::getInstance()->playBtnEffect();
-            Director::getInstance()->replaceScene(TransitionFade::create(0.5f, SelectCarScene::createScene()));
+            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.5f, SelectCarScene::createScene()));
         }
         break;
     default:

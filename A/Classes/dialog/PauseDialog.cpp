@@ -1,4 +1,4 @@
-﻿#include "PauseDialog.h"
+#include "PauseDialog.h"
 #include "UtilHelper.h"
 
 Scene* PauseDialog::createScene()
@@ -44,6 +44,8 @@ void PauseDialog::initUI()
     //back
     auto backSettings = Helper::seekWidgetByName(m_view, "Button_Back");
     backSettings->addTouchEventListener(this, toucheventselector(PauseDialog::backCallback));
+
+	addOwnAds();
 }
 
 void PauseDialog::setResumeCallbackFunc(Ref* sender, SEL_CallFunc callbackFunc)

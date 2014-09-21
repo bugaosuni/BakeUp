@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
  *
  * iPhone port by Simon Oliver - http://www.simonoliver.com - http://www.handcircus.com
