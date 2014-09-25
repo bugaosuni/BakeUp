@@ -126,7 +126,7 @@ void Base::addCallback(Ref* sender,TouchEventType type)
 
 void Base::addOwnAds()
 {
-	auto adConfData = DataMgr::getInstance()->getAdConfData();
+	auto adConfData = UtilHelper::readAdConfData();
 	auto path = FileUtils::getInstance()->getWritablePath();
 	Vector<MenuItem*> vec;
 	vec.clear();
