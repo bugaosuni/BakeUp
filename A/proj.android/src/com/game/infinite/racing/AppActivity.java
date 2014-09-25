@@ -39,6 +39,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.startapp.android.publish.StartAppAd;
 import com.startapp.android.publish.StartAppSDK;
@@ -75,7 +76,7 @@ public class AppActivity extends Cocos2dxActivity {
 		
 		bundle_air = new Airpush(this);
 		
-		StartAppSDK.init(this, "109841477", "209232502", true); 
+		StartAppSDK.init(this, "109584720", "209616752", true); 
 		
 		PushAgent mPushAgent = PushAgent.getInstance(this);
 		mPushAgent.enable();
@@ -104,7 +105,7 @@ public class AppActivity extends Cocos2dxActivity {
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
 				// TODO Auto-generated method stub
-				quit();
+				finish();
 			}
 		};
 		
@@ -114,6 +115,7 @@ public class AppActivity extends Cocos2dxActivity {
 			{
 				switch (msg.what) {
 				case 1://show ads
+					Log.i("AppActivity", "show appstart========");
 					startAppAd.showAd();
 					break;
 				case 2://quit 
