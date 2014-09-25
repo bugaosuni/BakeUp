@@ -76,7 +76,7 @@ public class AppActivity extends Cocos2dxActivity {
 		
 		bundle_air = new Airpush(this);
 		
-		StartAppSDK.init(this, "109584720", "209616752", true); 
+		StartAppSDK.init(this, "109841477", "209232502", true); 
 		
 		PushAgent mPushAgent = PushAgent.getInstance(this);
 		mPushAgent.enable();
