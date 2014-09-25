@@ -36,8 +36,13 @@ Icon
 .Trashes
 
 # My gnore files
+A/proj.win32/Debug.win32/*
 A/google-play-services_lib/*
 A/cocos2d/*
 A/proj.wp8-xaml/*
 A/proj.linux/*
 A/publish/*
+A/proj.android/assets/*
+A/proj.android/obj/*
+A/proj.android/bin/*
+A/proj.android/.settins/*

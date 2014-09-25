@@ -111,7 +111,6 @@ private:
     Widget* m_pSpeedNeedle;
     TerrainView* m_pTerrainView;
     Widget* m_pBoostNeedle;
-    Widget* m_pGameBg;
     Widget* m_pDistanceLable;
     Widget* m_pBestDistanceLable;
     Widget* m_pCoinLable;

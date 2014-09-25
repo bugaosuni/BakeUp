@@ -29,7 +29,7 @@ bool SettingsDialog::init()
         return false;
     }
 
-    m_view = GUIReader::getInstance()->widgetFromJsonFile("UI/SettingsDialog.ExportJson");
+    m_view = GUIReader::getInstance()->widgetFromJsonFile("UI/SettingDialog.ExportJson");
     this->addChild(m_view);
 
     initUI();

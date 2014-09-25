@@ -45,7 +45,7 @@ void PauseDialog::initUI()
     auto backSettings = Helper::seekWidgetByName(m_view, "Button_Back");
     backSettings->addTouchEventListener(this, toucheventselector(PauseDialog::backCallback));
 
-	addOwnAds();
+    addOwnAds();
 }
 
 void PauseDialog::setResumeCallbackFunc(Ref* sender, SEL_CallFunc callbackFunc)

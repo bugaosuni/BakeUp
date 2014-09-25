@@ -41,6 +41,8 @@ bool UpgradeCarScene::init()
     }
 
     m_view = GUIReader::getInstance()->widgetFromJsonFile("UI/UpgradeCarScene.ExportJson");
+    m_view->setSize(getVisableSize());
+    m_view->setPosition(VisibleRect::leftBottom());
     this->addChild(m_view);
 
     initPartData();
@@ -64,9 +66,6 @@ void UpgradeCarScene::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event
 }
 void UpgradeCarScene::initUI()
 {
-    auto panelRoot = Helper::seekWidgetByName(m_view, "Panel_Root");
-    panelRoot->setSize(getVisableSize());
-    panelRoot->setPosition(VisibleRect::leftBottom());
 
     //label gold
     m_labelGold = Helper::seekWidgetByName(m_view, "BitmapLabel_Gold");
@@ -88,12 +87,12 @@ void UpgradeCarScene::initUI()
     auto buttonGo = Helper::seekWidgetByName(m_view, "Button_Go");
     buttonGo->addTouchEventListener(this, toucheventselector(UpgradeCarScene::goCallback));
 
-	//panel_desc
-	auto panelPart = Helper::seekWidgetByName(m_view, "Panel_Part");
+    //panel_desc
+    auto panelPart = Helper::seekWidgetByName(m_view, "Panel_Part");
 
     //panel_desc
     auto panelDesc = Helper::seekWidgetByName(m_view, "Panel_Desc");
-	auto size = panelDesc->getSize();
+    auto size = panelDesc->getSize();
 
     //upgrade type
     m_bitmapLabelUpgrade = Helper::seekWidgetByName(m_view, "BitmapLabel_Upgrade");
@@ -129,7 +128,7 @@ void UpgradeCarScene::initUI()
         m_buttonUpgrade->setBright(true);
     }
 
-	addOwnAds();
+    addOwnAds();
 }
 
 void UpgradeCarScene::initPartData()

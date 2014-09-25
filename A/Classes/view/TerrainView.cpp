@@ -103,7 +103,12 @@ void TerrainView::onDraw(const Mat4 &transform, bool transformUpdated)
 void TerrainView::setOffsetX(const Vec2 pt)
 {
     m_nOffsetX = pt.x * PTM_RATIO;
-    this->setPosition(ccp(VisibleRect::right().x / 8 - m_nOffsetX * this->getScale(), 250 - pt.y * PTM_RATIO));
+     float fOffsetY = 200 - pt.y * PTM_RATIO;
+    if (fOffsetY > 300)
+    {
+        fOffsetY = 300;
+    }
+    this->setPosition(ccp(VisibleRect::right().x / 8 - m_nOffsetX * this->getScale(), fOffsetY));
     this->resetHillVertices();
 
 }

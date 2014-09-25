@@ -7,7 +7,7 @@
 
 #define CELLWIDTH (340.0f)
 #define FACTOR (350.0f)
-#define MASK (100.0f)
+#define MASK (150.0f)
 
 Scene* SelectCarScene::createScene()
 {
@@ -37,6 +37,8 @@ bool SelectCarScene::init()
     }
 
     m_view = GUIReader::getInstance()->widgetFromJsonFile("UI/SelectCarScene.ExportJson");
+    m_view->setSize(getVisableSize());
+    m_view->setPosition(VisibleRect::leftBottom());
     this->addChild(m_view);
 
     initUI();
@@ -61,10 +63,6 @@ void SelectCarScene::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event)
 
 void SelectCarScene::initUI()
 {
-    auto panelRoot = Helper::seekWidgetByName(m_view, "Panel_Root");
-    panelRoot->setSize(getVisableSize());
-    panelRoot->setPosition(VisibleRect::leftBottom());
-
     //title
     auto bitmapLabelTitle = Helper::seekWidgetByName(m_view, "BitmapLabel_Title");
     setLabelText(bitmapLabelTitle, DataMgr::getInstance()->getTextData()["car_title"].c_str());
@@ -89,7 +87,7 @@ void SelectCarScene::initUI()
     auto buttonGo = Helper::seekWidgetByName(m_view, "Button_Go");
     buttonGo->addTouchEventListener(this, toucheventselector(SelectCarScene::goCallback));
 
-	addOwnAds();
+    addOwnAds();
 }
 
 
@@ -103,7 +101,7 @@ void SelectCarScene::initListView()
     auto carSize = DataMgr::getInstance()->getCarData().size();
     for (int i = 0; i < carSize + 2; i++)
     {
-        auto cell = GUIReader::getInstance()->widgetFromJsonFile("UI/CellScene.ExportJson");
+        auto cell = GUIReader::getInstance()->widgetFromJsonFile("UI/ListItem.ExportJson");
         auto mask1 = Helper::seekWidgetByName(cell, "Image_Mask");
         mask1->setOpacity(0.0f);
         if (i == 0 || i == carSize + 1)
@@ -136,7 +134,7 @@ void SelectCarScene::initListView()
             cell->addChild(sp);
         }
         //open info
-        auto panelMask = Helper::seekWidgetByName(cell, "Panel_Mask");
+        auto panelMask = Helper::seekWidgetByName(cell, "Panel_Lock");
         auto bitmapLabelInfo = Helper::seekWidgetByName(cell, "BitmapLabel_Info");
         auto open = DataMgr::getInstance()->getCarData()[i-1].open;
         char ch[32];
@@ -317,7 +315,7 @@ void SelectCarScene::refreshUI()
     {
         auto cell = m_listView->getItem(index + 1);
         //open info
-        auto panelMask = Helper::seekWidgetByName(cell, "Panel_Mask");
+        auto panelMask = Helper::seekWidgetByName(cell, "Panel_Lock");
         auto bitmapLabelInfo = Helper::seekWidgetByName(cell, "BitmapLabel_Info");
         panelMask->setVisible(false);
         setLabelText(bitmapLabelInfo, "");

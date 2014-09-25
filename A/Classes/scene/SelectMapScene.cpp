@@ -7,7 +7,7 @@
 
 #define CELLWIDTH (340.0f)
 #define FACTOR (350.0f)
-#define MASK (100.0f)
+#define MASK (150.0f)
 
 Scene* SelectMapScene::createScene()
 {
@@ -37,6 +37,8 @@ bool SelectMapScene::init()
     }
 
     m_view = GUIReader::getInstance()->widgetFromJsonFile("UI/SelectMapScene.ExportJson");
+    m_view->setSize(getVisableSize());
+    m_view->setPosition(VisibleRect::leftBottom());
     this->addChild(m_view);
 
     initUI();
@@ -61,10 +63,6 @@ void SelectMapScene::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event)
 
 void SelectMapScene::initUI()
 {
-    auto panelRoot = Helper::seekWidgetByName(m_view, "Panel_Root");
-    panelRoot->setSize(getVisableSize());
-    panelRoot->setPosition(VisibleRect::leftBottom());
-
     //title
     auto bitmapLabelTitle = Helper::seekWidgetByName(m_view, "BitmapLabel_Title");
     setLabelText(bitmapLabelTitle, DataMgr::getInstance()->getTextData()["map_title"].c_str());
@@ -89,7 +87,7 @@ void SelectMapScene::initUI()
     auto buttonGo = Helper::seekWidgetByName(m_view, "Button_Go");
     buttonGo->addTouchEventListener(this, toucheventselector(SelectMapScene::goCallback));
 
-	addOwnAds();
+    addOwnAds();
 }
 
 void SelectMapScene::initListView()
@@ -102,7 +100,7 @@ void SelectMapScene::initListView()
     auto mapSize = DataMgr::getInstance()->getMapData().size();
     for (int i = 0; i < mapSize + 2; i++)
     {
-        auto cell = GUIReader::getInstance()->widgetFromJsonFile("UI/CellScene.ExportJson");
+        auto cell = GUIReader::getInstance()->widgetFromJsonFile("UI/ListItem.ExportJson");
         auto mask1 = Helper::seekWidgetByName(cell, "Image_Mask");
         mask1->setOpacity(0.0f);
         if (i == 0 || i == mapSize + 1)
@@ -135,7 +133,7 @@ void SelectMapScene::initListView()
             cell->addChild(sp);
         }
         //open info
-        auto panelMask = Helper::seekWidgetByName(cell, "Panel_Mask");
+        auto panelMask = Helper::seekWidgetByName(cell, "Panel_Lock");
         auto bitmapLabelInfo = Helper::seekWidgetByName(cell, "BitmapLabel_Info");
         auto open = DataMgr::getInstance()->getMapData()[i-1].open;
         char ch[32];
@@ -314,7 +312,7 @@ void SelectMapScene::refreshUI()
     {
         auto cell = m_listView->getItem(index + 1);
         //open info
-        auto panelMask = Helper::seekWidgetByName(cell, "Panel_Mask");
+        auto panelMask = Helper::seekWidgetByName(cell, "Panel_Lock");
         auto bitmapLabelInfo = Helper::seekWidgetByName(cell, "BitmapLabel_Info");
         char ch[32];
         panelMask->setVisible(false);

@@ -38,7 +38,6 @@ GameScene::GameScene()
     m_pSpeedNeedle = NULL;
     m_pTerrainView = NULL;
     m_pBoostNeedle = NULL;
-    m_pGameBg = NULL;
     m_pDistanceLable = NULL;
     m_pBestDistanceLable = NULL;
     m_pCoinLable = NULL;
@@ -83,8 +82,8 @@ bool GameScene::init()
     setupWorld();
     setupDebugDraw();
     initShape();
-    initMap();
     initUI();
+    initMap();
     initCar();
     setupStarAndEndPoint();
     scheduleUpdate();
@@ -173,20 +172,16 @@ void GameScene::initShape()
 
 void GameScene::initUI()
 {
+    m_nMapId = DataMgr::mapIndex + 1;
     m_view = GUIReader::getInstance()->widgetFromJsonFile("UI/GameScene.ExportJson");
-    this->addChild(m_view, 2);
+    m_view->setSize(getVisableSize());
+    m_view->setPosition(VisibleRect::leftBottom());
+    
+    this->addChild(m_view);
 
-    m_pGameBg = GUIReader::getInstance()->widgetFromJsonFile("UI/GameSceneBg.ExportJson");
-  
-    this->addChild(m_pGameBg, 0);
-
-    ImageView* gameBg = dynamic_cast<ImageView*>( Helper::seekWidgetByName(m_pGameBg, "Image_Sky"));
+    ImageView* gameBg = dynamic_cast<ImageView*>( Helper::seekWidgetByName(m_view, "Image_Bg"));
     gameBg->loadTexture("Terrain/map_bg" + String::createWithFormat("%d",m_nMapId)->_string + ".png");
-
-
-    auto panelRoot = Helper::seekWidgetByName(m_view, "Panel_Root");
-    panelRoot->setSize(getVisableSize());
-    panelRoot->setPosition(VisibleRect::leftBottom());
+    
 
     m_nTotalCoins = UtilHelper::getFromInteger(USER_GOLD);
 
@@ -229,12 +224,11 @@ void GameScene::initUI()
 
 void GameScene::initMap()
 {
-    m_nMapId = DataMgr::mapIndex + 1;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     umeng::MobClickCpp::startLevel(String::createWithFormat("%d",m_nMapId)->_string.c_str());
 #endif    
     m_pTerrainView = TerrainView::createWithWorld(m_pBox2dWorld);
-    this->addChild(m_pTerrainView , 1);
+    m_view->addChild(m_pTerrainView , 1);
     
     //GL_CLAMP_TO_BORDER
     Texture2D::TexParams params = {GL_LINEAR, GL_LINEAR, GL_REPEAT, 0x812D}; //缩小 放大  水平 T垂直

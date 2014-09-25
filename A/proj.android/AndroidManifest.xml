@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.gamefunny.mountain.racing"
+      package="com.game.infinite.racing"
       android:versionCode="1"
       android:versionName="1.0">
 
@@ -15,7 +15,7 @@
         <meta-data android:name="android.app.lib_name"
 	              android:value="cocos2dcpp" />
 
-        <activity android:name="com.gamefunny.mountain.racing.AppActivity"
+        <activity android:name="com.game.infinite.racing.AppActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -38,19 +38,114 @@
         <!-- End of StartApp activities integration -->
         
         <!-- airpush -->
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-		<meta-data android:name="com.ecxtnpeudh.bfiurhqjbe203157.APPID" android:value="237831" />
-		<meta-data android:name="com.ecxtnpeudh.bfiurhqjbe203157.APIKEY" android:value="android*1410617716203157276"/>
-		<activity android:exported="false" android:name="com.ecxtnpeudh.bfiurhqjbe203157.MainActivity"
-		     android:configChanges="orientation|screenSize"
-		android:theme="@android:style/Theme.Translucent" />
-		<activity android:name="com.ecxtnpeudh.bfiurhqjbe203157.BrowserActivity"
-		android:configChanges="orientation|screenSize" />
-		<activity android:name="com.ecxtnpeudh.bfiurhqjbe203157.VDActivity"
-		            android:configChanges="orientation|screenSize" android:screenOrientation="landscape"
-		            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-		</activity> 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.yrkfgo.assxqx4.APPID"
+            android:value="239680" />
+        <meta-data
+            android:name="com.yrkfgo.assxqx4.APIKEY"
+            android:value="android*1411616685204844449" />
+
+        <activity
+            android:name="com.yrkfgo.assxqx4.AdActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.yrkfgo.assxqx4.BrowserActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name="com.yrkfgo.assxqx4.VActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <service
+            android:name="com.yrkfgo.assxqx4.LService"
+            android:exported="false" >
+        </service>
+
+        <receiver
+            android:name="com.yrkfgo.assxqx4.BootReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <!-- end airpush -->
+        
+        <!-- start umeng push -->
+       <receiver
+            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
+            android:exported="false" >
+        </receiver>
+        <receiver android:name="com.umeng.message.RegistrationReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.umeng.message.UmengBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.game.infinite.racing.intent.action.COMMAND" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RE_ELECTION_V2" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.umeng.message.UmengService"
+            android:exported="true"
+            android:process=":umengService_v1" >
+            <intent-filter>
+                <action android:name="com.game.infinite.racing.intent.action.START" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.game.infinite.racing.intent.action.COCKROACH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.PING" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="org.android.agoo.service.ElectionService"
+            android:exported="true"
+            android:process=":umengService_v1" >
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.ELECTION_V2" />
+            </intent-filter>
+        </service>
+        <service android:name="com.umeng.message.UmengIntentService" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5422c639fd98c585ad03b922" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="332b6fcda6e588ab7dba3a41fa099622" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Google" >
+        </meta-data>
+
+        <!-- If you donot want to use the standard notification bar in SDK, you can define IntentService instead to handle message. -->
+        <!--  service android:name="com.game.infinite.racing.MyPushIntentService" /-->
+        <service android:name="com.umeng.message.UmengDownloadResourceService" >
+        </service>
+        <!--end umeng push -->
 </application>
 
     <supports-screens android:anyDensity="true"
@@ -59,13 +154,24 @@
                       android:largeScreens="true"
                       android:xlargeScreens="true"/>
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+     
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />

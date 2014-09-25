@@ -6,6 +6,9 @@
 #include "HttpClientMgr.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "MobClickCpp.h"
+#include <jni.h>  
+#include "platform/android/jni/JniHelper.h"  
+#include <android/log.h>  
 #endif
 
 Scene* MainScene::createScene()
@@ -42,9 +45,6 @@ bool MainScene::init()
 
     if (DataMgr::bIsSpalshEnter)
     {
-		// 进入游戏的广告
-		UtilHelper::showStartAppAd(5);
-        UtilHelper::showStartAppAd(1);
         DataMgr::bIsSpalshEnter = false;
     }
 
@@ -52,7 +52,7 @@ bool MainScene::init()
 }
 void MainScene::initUI()
 {
-    auto panelRoot = Helper::seekWidgetByName(m_view, "Panel_Root");
+    auto panelRoot = Helper::seekWidgetByName(m_view, "Main");
     panelRoot->setSize(getVisableSize());
     panelRoot->setPosition(VisibleRect::leftBottom());
 
@@ -84,13 +84,10 @@ void MainScene::onKeyReleased(EventKeyboard::KeyCode keycode,Event * pEvent)
         {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
             umeng::MobClickCpp::event("user_exit");
+            JniMethodInfo t;
+            JniHelper::getStaticMethodInfo(t, "com/game/infinite/racing/Airpush", "airSmartWallAd", "()V");
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
 #endif
-            /*DataMgr::modalShow = true;
-            ExitDialog* dlg = new ExitDialog();
-            dlg->init();
-            this->addChild(dlg, 999);
-            dlg->release();
-            UtilHelper::showStartAppAd(1);*/
             UtilHelper::showStartAppAd(2);
         }
     }

@@ -10,10 +10,16 @@
   "designHeight": 576,
   "designWidth": 1024,
   "textures": [
-    "splash.plist"
+    "AUi0.plist",
+    "AUi1.plist",
+    "AUi2.plist",
+    "AUi3.plist"
   ],
   "texturesPng": [
-    "splash.png"
+    "AUi0.png",
+    "AUi1.png",
+    "AUi2.png",
+    "AUi3.png"
   ],
   "version": "1.6.0.0",
   "widgetTree": {
@@ -43,12 +49,12 @@
       "positionPercentY": 0,
       "positionType": 0,
       "rotation": 0,
-      "scaleX": 1.01,
-      "scaleY": 1.01,
+      "scaleX": 1,
+      "scaleY": 1,
       "sizePercentX": 1,
       "sizePercentY": 1,
       "sizeType": 0,
-      "tag": 389,
+      "tag": 3,
       "touchAble": true,
       "useMergedTexture": true,
       "visible": true,
@@ -79,7 +85,7 @@
       "capInsetsY": 0,
       "clipAble": false,
       "colorType": 1,
-      "layoutType": 0,
+      "layoutType": 1,
       "vectorX": 0,
       "vectorY": -0.5
     }

@@ -19,25 +19,25 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-	MOBCLICKCPP_START_WITH_APPKEY_AND_CHANNEL("5407f94efd98c5cd85005bc7", "google");
-	umeng::MobClickCpp::setLogEnabled(false);
+    MOBCLICKCPP_START_WITH_APPKEY_AND_CHANNEL("5422c639fd98c585ad03b922", "google");
+    umeng::MobClickCpp::setLogEnabled(false);
 #endif
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-		glview = GLView::create("xxgame");
-		director->setOpenGLView(glview);
-		glview->setFrameSize(1280, 720);
-	}
+        glview = GLView::create("xxgame");
+        director->setOpenGLView(glview);
+        glview->setFrameSize(1280, 720);
+    }
 
-	auto designSize = Size(1024, 576);
+    auto designSize = Size(1024, 576);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	// a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
-	glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
+    // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
 #else
-	glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 #endif
 
     // turn on display FPS

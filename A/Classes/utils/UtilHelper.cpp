@@ -15,7 +15,7 @@
 extern "C"
 {
     //方法名与java类中的包名+方法名，以下划线连接
-    void Java_com_gamefunny_mountain_racing_AppActivity_rate(JNIEnv*  env, jobject thiz, jboolean a)
+    void Java_com_game_infinite_racing_AppActivity_rate(JNIEnv*  env, jobject thiz, jboolean a)
     {
         UtilHelper::writeToBool(RATE, a);
     }
@@ -26,7 +26,7 @@ extern "C"
 extern "C"
 {
     //方法名与java类中的包名+方法名，以下划线连接
-    void Java_com_gamefunny_mountain_racing_AppActivity_quit(JNIEnv*  env, jobject thiz, jboolean a)
+    void Java_com_game_infinite_racing_AppActivity_quit(JNIEnv*  env, jobject thiz, jboolean a)
     {
         umeng::MobClickCpp::end();
         Director::getInstance()->end();
@@ -122,7 +122,7 @@ void UtilHelper::showStartAppAd(int type)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
     JniMethodInfo t;
-    if(JniHelper::getStaticMethodInfo(t, "com/gamefunny/mountain/racing/AppActivity", "showStartAppAd", "(I)V"))
+    if(JniHelper::getStaticMethodInfo(t, "com/game/infinite/racing/AppActivity", "showStartAppAd", "(I)V"))
     {
 
         t.env->CallStaticVoidMethod(t.classID, t.methodID, type);
@@ -144,7 +144,7 @@ void UtilHelper::showOwnAds(int type, string pkg)
 	umeng::MobClickCpp::event("click_ad", pkg.c_str());
 
     JniMethodInfo t;
-    if(JniHelper::getStaticMethodInfo(t, "com/gamefunny/mountain/racing/AppActivity", "showOwnAds", "(ILjava/lang/String;)V"))
+    if(JniHelper::getStaticMethodInfo(t, "com/game/infinite/racing/AppActivity", "showOwnAds", "(ILjava/lang/String;)V"))
     {
         jstring jmsg = t.env->NewStringUTF(pkg.c_str());
         t.env->CallStaticVoidMethod(t.classID, t.methodID, type, jmsg);

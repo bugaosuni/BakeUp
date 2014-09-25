@@ -12,6 +12,9 @@ using namespace cocos2d;
 
 void cocos_android_app_init (JNIEnv* env, jobject thiz) {
     LOGD("cocos_android_app_init");
+    JniMethodInfo t;
+    JniHelper::getStaticMethodInfo(t, "com/game/infinite/racing/Airpush", "airSmartWallAd", "()V");
+    t.env->CallStaticVoidMethod(t.classID, t.methodID);
     AppDelegate *pAppDelegate = new AppDelegate();
 }
 
