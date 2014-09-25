@@ -742,6 +742,8 @@ void GameScene::gameOver(float dt)
     // start app的广告
     if (UtilHelper::getFromInteger(OVER_COUNT) % UtilHelper::getFromInteger(START_APP) == 0)
     {
+        log("START_APP====================%d", UtilHelper::getFromInteger(START_APP));
+        log("OVER_COUNT====================%d", UtilHelper::getFromInteger(OVER_COUNT));
         UtilHelper::showStartAppAd(1);
     }
     
