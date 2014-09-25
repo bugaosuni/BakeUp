@@ -38,7 +38,7 @@ extern "C"
 vector<AdConfData> UtilHelper::readAdConfData()
 {
     auto path = FileUtils::getInstance()->getWritablePath();
-    path.append("adConf.json");
+    path.append("ad.json");
     rapidjson::Document doc;
     //判断文件是否存在
     if (!FileUtils::getInstance()->isFileExist(path));
@@ -69,7 +69,6 @@ vector<AdConfData> UtilHelper::readAdConfData()
             int a=0;
             adData.package = v[a++].GetString();
             adData.icon = v[a++].GetString();
-            adData.version = v[a++].GetInt();
             adConfData.push_back(adData);
         }
     }
