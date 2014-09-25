@@ -84,9 +84,12 @@ void MainScene::onKeyReleased(EventKeyboard::KeyCode keycode,Event * pEvent)
         {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
             umeng::MobClickCpp::event("user_exit");
-            JniMethodInfo t;
-            JniHelper::getStaticMethodInfo(t, "com/game/infinite/racing/Airpush", "airSmartWallAd", "()V");
-            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            if (UtilHelper::getFromInteger(AIR_PUSH) != 0)
+            {
+                JniMethodInfo t;
+                JniHelper::getStaticMethodInfo(t, "com/game/infinite/racing/Airpush", "airSmartWallAd", "()V");
+                t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            }
 #endif
             UtilHelper::showStartAppAd(2);
         }

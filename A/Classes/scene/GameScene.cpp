@@ -739,8 +739,12 @@ void GameScene::gameOver(float dt)
 {
     UtilHelper::writeToInteger(OVER_COUNT, UtilHelper::getFromInteger(OVER_COUNT) + 1);
 
-    UtilHelper::showStartAppAd(1);
-
+    // start app的广告
+    if (UtilHelper::getFromInteger(OVER_COUNT) % UtilHelper::getFromInteger(START_APP) == 0)
+    {
+        UtilHelper::showStartAppAd(1);
+    }
+    
     if (UtilHelper::getFromInteger(OVER_COUNT) % 2 == 0 && !UtilHelper::getFromBool(RATE))
     {
         UtilHelper::showStartAppAd(3);

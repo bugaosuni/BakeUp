@@ -186,7 +186,7 @@ void HttpClientMgr::onHttpRequestReadRptFile(HttpClient *sender, HttpResponse *r
     {
         res+=(*buffer)[i];
     }
-
+    
     auto adConfDataFromNet = UtilHelper::getConfDataFromNet(res);
     if (adConfDataFromNet.airpush != UtilHelper::getFromInteger(AIR_PUSH))
     {
