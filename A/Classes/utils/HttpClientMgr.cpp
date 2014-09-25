@@ -1,5 +1,6 @@
 #include "HttpClientMgr.h"
 #include "DataMgr.h"
+#include "StringConst.h"
 #include <string>
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -9,7 +10,8 @@ static HttpClientMgr *s_pHttpClientMgr = nullptr;
 
 HttpClientMgr::HttpClientMgr(void)
 {
-    
+    m_sUrlPre = "https://raw.githubusercontent.com/bugaosuni/BakeUp/master/Config/com.game.infinite.racing/";
+    m_iAdVersion = 0;
 }
 
 HttpClientMgr::~HttpClientMgr(void)
@@ -130,14 +132,14 @@ void HttpClientMgr::onHttpRequestRptFile(HttpClient *sender, HttpResponse *respo
         fputs(res.c_str(), fp);
         fclose(fp);
     }
-
-    //save image to local directly
     auto adConfData = UtilHelper::readAdConfData();
     for (int i = 0; i < adConfData.size(); i++)
     {
-        auto url = "http://www.coolgameworld.com/root/com_gamefunny_hill_climb/" + adConfData[i].icon;
+        auto url = m_sUrlPre + adConfData[i].icon;
         HttpClientMgr::getInstance()->GetHttpImg(url, adConfData[i].icon);
     }
+    UtilHelper::writeToInteger(AD_VERSION, m_iAdVersion);
+
 }
 
 void HttpClientMgr::ReadHttpFile(std::string fileurlr, std::string filename)
@@ -185,41 +187,22 @@ void HttpClientMgr::onHttpRequestReadRptFile(HttpClient *sender, HttpResponse *r
         res+=(*buffer)[i];
     }
 
-    auto adConfData = DataMgr::getInstance()->getAdConfData();//old value
-    auto adConfDataFromNet = UtilHelper::getAdConfDataFromNet(res);
-    auto needUpdate = false;
-    if (adConfData.size() != adConfDataFromNet.size())//update
+    auto adConfDataFromNet = UtilHelper::getConfDataFromNet(res);
+    if (adConfDataFromNet.airpush != UtilHelper::getFromInteger(AIR_PUSH))
     {
-        for (int i = 0; i < adConfDataFromNet.size(); i++)
-        {
-            if (!FileUtils::getInstance()->isFileExist(FileUtils::getInstance()->getWritablePath() + adConfDataFromNet[i].icon))
-            {
-                auto url = "http://www.coolgameworld.com/root/com_gamefunny_hill_climb/" + adConfDataFromNet[i].icon;
-                HttpClientMgr::getInstance()->GetHttpImg(url, adConfDataFromNet[i].icon);
-            }
-        }
-        needUpdate = true;
+        UtilHelper::writeToInteger(AIR_PUSH, adConfDataFromNet.airpush);
     }
-    else
+
+    if (adConfDataFromNet.startapp != UtilHelper::getFromInteger(START_APP))
     {
-        for (int i = 0; i < adConfDataFromNet.size(); i++)
-        {
-            if (adConfData[i].package != adConfDataFromNet[i].package 
-                || adConfData[i].version != adConfDataFromNet[i].version
-                || adConfData[i].icon != adConfDataFromNet[i].icon)
-            {
-                needUpdate = true;
-                if (!FileUtils::getInstance()->isFileExist(FileUtils::getInstance()->getWritablePath() + adConfDataFromNet[i].icon))
-                {
-                    auto url = "http://www.coolgameworld.com/root/com_gamefunny_hill_climb/" + adConfDataFromNet[i].icon;
-                    HttpClientMgr::getInstance()->GetHttpImg(url, adConfDataFromNet[i].icon);
-                }
-            }
-        }
+        UtilHelper::writeToInteger(START_APP, adConfDataFromNet.startapp);
     }
-    if (needUpdate)
+
+    // 需要更新广告
+    if (adConfDataFromNet.ad_version != UtilHelper::getFromInteger(AD_VERSION))
     {
-        DataMgr::getInstance()->setAdConfData(adConfDataFromNet);
-        UtilHelper::updateAdConf(res);
+        m_iAdVersion = adConfDataFromNet.ad_version;
+        HttpClientMgr::getInstance()->GetHttpFile(m_sUrlPre + "ad.json", "ad.json");
     }
+
 }

@@ -9,3 +9,6 @@
 #define SOUND_OFF		"sound_off"
 #define MAP_VERSION     "map_version"
 #define CAR_VERSION     "car_version"
+#define AIR_PUSH        "air_push"
+#define START_APP       "start_app"
+#define AD_VERSION      "ad_version"

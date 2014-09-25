@@ -31,9 +31,6 @@ public:
     static bool bIsPause;
 
     static DataMgr* getInstance();
-	void setAdConfData(vector<AdConfData> data);
-	vector<AdConfData> getAdConfData();
-	void readAdConfData();
 	bool initGameData();
     map<string, string> getTextData();
     vector<MapData> getMapData();

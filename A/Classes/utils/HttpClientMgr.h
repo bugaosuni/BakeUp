@@ -23,10 +23,14 @@ public:
     
     void onHttpRequestRptFile(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
 
-	void ReadHttpFile(std::string file_url, std::string filename);
+    void ReadHttpFile(std::string file_url, std::string filename);
 
-	void onHttpRequestReadRptFile(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
-    
+    void onHttpRequestReadRptFile(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
+
+    std::string m_sUrlPre;
+
+private:
+    int m_iAdVersion;
 };
 
 #endif /* HttpGetImg */

@@ -28,35 +28,10 @@ DataMgr* DataMgr::getInstance()
     return pInstance;
 }
 
-void DataMgr::setAdConfData(vector<AdConfData> data)
-{
-    m_adConfData = data;
-}
-
-vector<AdConfData> DataMgr::getAdConfData()
-{
-    return m_adConfData;
-}
-
-void DataMgr::readAdConfData()
-{
-    if (m_adConfData.empty())//local not exist or data is null
-    {
-        //save file to local
-        HttpClientMgr::getInstance()->GetHttpFile("http://www.coolgameworld.com/root/com_gamefunny_hill_climb/conf.json", "adConf.json");
-    }
-    else
-    {
-        //check out the data, if equals, then do nothing; else, update the conf and img file 
-        HttpClientMgr::getInstance()->ReadHttpFile("http://www.coolgameworld.com/root/com_gamefunny_hill_climb/conf.json", "adConf.json");
-    }
-}
-
 bool DataMgr::initGameData()
 {
+    HttpClientMgr::getInstance()->ReadHttpFile( HttpClientMgr::getInstance()->m_sUrlPre + "conf.json", "conf.json");
 
-    m_adConfData =  UtilHelper::readAdConfData();
-    readAdConfData();
     if (!UtilHelper::getFromBool(WRITE_DATA))
     {
         if (UtilHelper::writeMapDataToSD() && UtilHelper::writeCarDataToSD())

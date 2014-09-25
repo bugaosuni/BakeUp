@@ -34,17 +34,6 @@ extern "C"
 }
 #endif
 
-void UtilHelper::updateAdConf(string response)
-{
-    auto path = FileUtils::getInstance()->getWritablePath();
-    path.append("adConf.json");
-    FILE* file = fopen(path.c_str(), "wb");
-    if (file)
-    {
-        fputs(response.c_str(), file);
-        fclose(file);
-    }
-}
 
 vector<AdConfData> UtilHelper::readAdConfData()
 {
@@ -87,19 +76,18 @@ vector<AdConfData> UtilHelper::readAdConfData()
     return adConfData;
 }
 
-vector<AdConfData> UtilHelper::getAdConfDataFromNet(string response)
+ConfData UtilHelper::getConfDataFromNet(string response)
 {
+    ConfData netConfData;
     rapidjson::Document doc;
     doc.Parse<rapidjson::kParseDefaultFlags>(response.c_str());
     //判断读取成功与否 和 是否为数组类型  
     if (doc.HasParseError() || !doc.IsArray())  
     {  
-        log("get json data err!"); 
-        //return ;
+       // log("get json data err! %s",response.c_str()); 
+        return netConfData;
     }
 
-    vector<AdConfData> adConfData;
-    adConfData.clear();
     //从第2行开始，因为第一行是属性  
     for(unsigned int i=1;i<doc.Size();i++)
     {  
@@ -109,12 +97,11 @@ vector<AdConfData> UtilHelper::getAdConfDataFromNet(string response)
 
         //按下标提取  
         int a=0;
-        adData.package = v[a++].GetString();
-        adData.icon = v[a++].GetString();
-        adData.version = v[a++].GetInt();
-        adConfData.push_back(adData);
+        netConfData.airpush = v[a++].GetInt();
+        netConfData.startapp = v[a++].GetInt();
+        netConfData.ad_version = v[a++].GetInt();
     }
-    return adConfData;
+    return netConfData;
 }
 
 void UtilHelper::showStartAppAd(int type)
@@ -141,7 +128,7 @@ void UtilHelper::showStartAppAd(int type)
 void UtilHelper::showOwnAds(int type, string pkg)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	umeng::MobClickCpp::event("click_ad", pkg.c_str());
+    umeng::MobClickCpp::event("click_ad", pkg.c_str());
 
     JniMethodInfo t;
     if(JniHelper::getStaticMethodInfo(t, "com/game/infinite/racing/AppActivity", "showOwnAds", "(ILjava/lang/String;)V"))

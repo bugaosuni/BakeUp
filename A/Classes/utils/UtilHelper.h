@@ -240,12 +240,23 @@ struct AdConfData
 {
     string		package;
     string		icon;
-    int			version;
     AdConfData()
     {
         package = "com.gameworld.up.hill.racing";
         icon = "icon1.png";
-        version = 1;
+    }
+};
+
+struct ConfData
+{
+    int		airpush;
+    int		startapp;
+    int		ad_version;
+    ConfData()
+    {
+        airpush = 0;
+        startapp = 0;
+        ad_version = 0;
     }
 };
 
@@ -253,11 +264,9 @@ class UtilHelper
 {
 public:
 
-	static void updateAdConf(string response);
-	static vector<AdConfData> readAdConfData();
-	static vector<AdConfData> getAdConfDataFromNet(string response);
-	static void showStartAppAd(int type);
-	static void showOwnAds(int type, string pkg);
+    static vector<AdConfData> readAdConfData();
+    static void showStartAppAd(int type);
+    static void showOwnAds(int type, string pkg);
     static bool screenShoot();
     static bool writeMapDataToSD();
     static bool writeCarDataToSD();
@@ -271,6 +280,7 @@ public:
     static vector<CarInfo> readCarInfoData();
     static vector<CarLevel> readCarLevelData();
     static FileVersion readFileVersionData();
+    static ConfData getConfDataFromNet(string response);
     static bool updateMapDate();
     static bool updateCarDate();
     static void writeToString(const char* key, string value);
