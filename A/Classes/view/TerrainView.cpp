@@ -104,9 +104,9 @@ void TerrainView::setOffsetX(const Vec2 pt)
 {
     m_nOffsetX = pt.x * PTM_RATIO;
      float fOffsetY = 200 - pt.y * PTM_RATIO;
-    if (fOffsetY > 300)
+    if (fOffsetY > 260)
     {
-        fOffsetY = 300;
+        fOffsetY = 260;
     }
     this->setPosition(ccp(VisibleRect::right().x / 8 - m_nOffsetX * this->getScale(), fOffsetY));
     this->resetHillVertices();
@@ -180,11 +180,11 @@ void TerrainView::resetHillVertices()
                 pt1.y = ymid + ampl * cosf(da * j);
                 m_arrfBorderVertices[m_nBorderVertices++] = pt1;
 
-                float fTexCoords_pt0 = float(pt0.y - 200) / 512;
-                float fTexCoords_pt1 = float(pt1.y - 200) / 512;
+                float fTexCoords_pt0 = float(pt0.y - 250) / 512;
+                float fTexCoords_pt1 = float(pt1.y - 250) / 512;
 
                  // 土壤
-                m_arrfGroundVertices[m_nMapVertices] = Vec2(pt0.x,  -312);
+                m_arrfGroundVertices[m_nMapVertices] = Vec2(pt0.x,  -262);
                 m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt0.x / 512, 1.0f);
                 // 草坪
                 m_arrfSurfaceVertices[m_nMapVertices] = Vec2(pt0.x, pt0.y - 32);
@@ -193,7 +193,7 @@ void TerrainView::resetHillVertices()
                 // 下一个点
                 m_nMapVertices += 1;
 
-                m_arrfGroundVertices[m_nMapVertices] = Vec2(pt1.x, -312);
+                m_arrfGroundVertices[m_nMapVertices] = Vec2(pt1.x, -262);
                 m_arrfGroundTexCoords[m_nMapVertices] = Vec2(pt1.x / 512, 1.0f);
                 m_arrfSurfaceVertices[m_nMapVertices] = Vec2(pt1.x, pt1.y - 32);
                 m_arrfSurfaceTexCoords[m_nMapVertices] = Vec2(pt1.x / 512, 1.0f);
@@ -344,8 +344,4 @@ void TerrainView::addStartAndEndBrand()
     auto startBrandSprite = Sprite::createWithSpriteFrameName("start.png");
     startBrandSprite->setPosition(250, 50);
     this->addChild(startBrandSprite, -2);
-
-    auto endBrandSprite = Sprite::createWithSpriteFrameName("end.png");
-    endBrandSprite->setPosition(32750, 50);
-    this->addChild(endBrandSprite, -2);
 }

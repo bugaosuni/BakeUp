@@ -12,3 +12,6 @@
 #define AIR_PUSH        "air_push"
 #define START_APP       "start_app"
 #define AD_VERSION      "ad_version"
+#define NOW_DAY         "now_day"
+#define TODAY_COUNT     "today_count"
+#define TODAY_DISTANCE  "today_distance"

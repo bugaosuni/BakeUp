@@ -1,9 +1,14 @@
-#include "SelectMapScene.h"
+ï»¿#include "SelectMapScene.h"
 #include "SelectCarScene.h"
 #include "ConfirmDialog.h"
-#include "MainScene.h"
 #include "UtilHelper.h"
 #include "DataMgr.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include <jni.h>
+#include "platform/android/jni/JniHelper.h"
+#include <android/log.h>
+#include "MobClickCpp.h"
+#endif
 
 #define CELLWIDTH (340.0f)
 #define FACTOR (350.0f)
@@ -50,17 +55,6 @@ bool SelectMapScene::init()
     return true;
 }
 
-void SelectMapScene::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event)
-{
-    if(EventKeyboard::KeyCode::KEY_RETURN == keycode || EventKeyboard::KeyCode::KEY_ESCAPE == keycode || EventKeyboard::KeyCode::KEY_BACKSPACE == keycode)
-    {
-        if (!DataMgr::modalShow)
-        {
-            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.5f, MainScene::createScene()));
-        }
-    }
-}
-
 void SelectMapScene::initUI()
 {
     //title
@@ -71,9 +65,12 @@ void SelectMapScene::initUI()
     m_labelGold = Helper::seekWidgetByName(m_view, "BitmapLabel_Gold");
     setLabelText(m_labelGold, UtilHelper::getFromInteger(USER_GOLD));
 
-    //add
-    auto buttonAdd = Helper::seekWidgetByName(m_view, "Button_Add");
-    buttonAdd->addTouchEventListener(this, toucheventselector(SelectMapScene::addCallback));
+    //daily task
+    auto buttonAdd = Helper::seekWidgetByName(m_view, "Button_DailyTask");
+    buttonAdd->addTouchEventListener(this, toucheventselector(SelectMapScene::dailyTaskCallback));
+
+    auto achievementTask = Helper::seekWidgetByName(m_view, "Button_Achievement");
+    achievementTask->addTouchEventListener(this, toucheventselector(SelectMapScene::achievementCallback));
 
     //settings
     auto buttonSettings = Helper::seekWidgetByName(m_view, "Button_Settings");
@@ -81,7 +78,8 @@ void SelectMapScene::initUI()
 
     //back
     auto buttonBack = Helper::seekWidgetByName(m_view, "Button_Back");
-    buttonBack->addTouchEventListener(this, toucheventselector(SelectMapScene::backCallback));
+    buttonBack->setVisible(false);
+   // buttonBack->addTouchEventListener(this, toucheventselector(SelectMapScene::backCallback));
 
     //go
     auto buttonGo = Helper::seekWidgetByName(m_view, "Button_Go");
@@ -155,12 +153,12 @@ void SelectMapScene::initListView()
 
 void SelectMapScene::scrollListView(float offsetX)
 {
-    //for Ñ­»·±éÀúÈÝÆ÷ÖÐµÄÃ¿¸ö¾«Áé  
+    //for Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
     for( auto e : m_listView->getItems() )  
     {
         auto mask1 = Helper::seekWidgetByName(e, "Image_Mask");
-        auto pointX = e->getPositionX();//»ñµÃµ±Ç°¶ÔÏóµÄX×ø±ê£¨²»¹ÜÔõÃ´¹ö¶¯£¬Õâ¸ö×ø±ê¶¼ÊÇ²»±äµÄ£©  
-        float endPosX = pointX + offsetX;//½«¾«ÁéµÄ X×ø±ê + Æ«ÒÆX×ø±ê
+        auto pointX = e->getPositionX();//ï¿½ï¿½Ãµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ê£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¶¼ï¿½Ç²ï¿½ï¿½ï¿½Ä£ï¿½  
+        float endPosX = pointX + offsetX;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Xï¿½ï¿½ï¿½ + Æ«ï¿½ï¿½Xï¿½ï¿½ï¿½
 
         if( endPosX > 170 && endPosX <= 510 )  
         {  
@@ -170,9 +168,9 @@ void SelectMapScene::scrollListView(float offsetX)
         }  
         else if( endPosX > 510 && endPosX < 850 )   
         {  
-            //ÏÂÃæÕâ¸ö¹«Ê½²»ºÃ½âÊÍ£¬ÎÒ¾ÍÕâÃ´Ëµ°É£º  
-            //¼ÙÉè endPosX = 200£¬ÄÇÃ´·Å´ó±¶ÊýÓ¦¸ÃÊÇ 200 / 150 = 1.33×óÓÒ£¬ÄÇÃ´µ±endPosX = 300Ê±£¬³öÓÚ¶Ô³ÆµÄÔ­Àí£¬ÎÒÃÇÒÔ512Îª¶Ô³ÆÖÐÐÄ£¬ÄÇÃ´  
-            //300 µÄ·Å´ó±¶ÊýÒ²Ó¦¸ÃÊÇ 1.33¡£Õâ¾ÍÊÇÏÂÃæµÄ¹«Ê½ÓÉÀ´  
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½Í£ï¿½ï¿½Ò¾ï¿½ï¿½ï¿½Ã´Ëµï¿½É£ï¿½  
+            //ï¿½ï¿½ï¿½ï¿½ endPosX = 200ï¿½ï¿½ï¿½ï¿½Ã´ï¿½Å´ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ 200 / 150 = 1.33ï¿½ï¿½ï¿½Ò£ï¿½ï¿½ï¿½Ã´ï¿½ï¿½endPosX = 300Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶Ô³Æµï¿½Ô­ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½512Îªï¿½Ô³ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ã´
+            //300 ï¿½Ä·Å´ï¿½ï¿½ï¿½Ò²Ó¦ï¿½ï¿½ï¿½ï¿½ 1.33ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½Ê½ï¿½ï¿½ï¿½ï¿½  
             float a = endPosX - 510;  
             float b = 510 - a;  
 
@@ -182,25 +180,10 @@ void SelectMapScene::scrollListView(float offsetX)
         }  
         else  
         {  
-            //²»ÊÇÔÚÉÏÃæµÄ·¶Î§£¬ÔòÉèÖÃÎªÕý³£´óÐ¡  
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ð¡  
             //e->setScale(1.0f);
         }  
     } 
-}
-
-void SelectMapScene::backCallback(Ref* sender,TouchEventType type)
-{
-    switch (type)
-    {
-    case TOUCH_EVENT_ENDED:
-        {
-            AudioEnginMgr::getInstance()->playBtnEffect();
-            Director::getInstance()->replaceScene(TransitionSlideInL::create(0.5f, MainScene::createScene()));
-        }
-        break;
-    default:
-        break;
-    }
 }
 
 void SelectMapScene::goCallback(Ref* sender,TouchEventType type)
@@ -220,8 +203,8 @@ void SelectMapScene::scrollViewCallBack(Ref* sender, ScrollviewEventType type)
 {
     m_scrolling = true;
     ListView* view = dynamic_cast<ListView*>(sender);
-    //ÔÚscrollViewÍÏ¶¯Ê±ÏìÓ¦¸Ãº¯Êý  
-    auto offsetPosX = view->getInnerContainer()->getPositionX();//»ñµÃÆ«ÒÆX×ø±ê(ÏòÓÒÒÆ¶¯£¬Æ«ÒÆÁ¿ÎªÕýÊý£¬Ïò×óÔòÎª¸ºÊý£©  
+    //ï¿½ï¿½scrollViewï¿½Ï¶ï¿½Ê±ï¿½ï¿½Ó¦ï¿½Ãºï¿½ï¿½ï¿½  
+    auto offsetPosX = view->getInnerContainer()->getPositionX();//ï¿½ï¿½ï¿½Æ«ï¿½ï¿½Xï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
 
     scrollListView(offsetPosX);
 }
@@ -323,5 +306,22 @@ void SelectMapScene::refreshUI()
         auto gold = UtilHelper::getFromInteger(USER_GOLD) - DataMgr::getInstance()->getMapData()[index].cost;
         setLabelText(m_labelGold, gold);
         UtilHelper::writeToInteger(USER_GOLD, gold);
+    }
+}
+
+void SelectMapScene::onKeyReleased(EventKeyboard::KeyCode keycode,Event * pEvent) 
+{ 
+    if(EventKeyboard::KeyCode::KEY_RETURN == keycode || EventKeyboard::KeyCode::KEY_ESCAPE == keycode || EventKeyboard::KeyCode::KEY_BACKSPACE == keycode)
+    {
+        if (!DataMgr::modalShow)
+        {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+            umeng::MobClickCpp::event("user_exit");
+            JniMethodInfo t;
+            JniHelper::getStaticMethodInfo(t, "com/game/infinite/racing/Airpush", "airSmartWallAd", "()V");
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+#endif
+            UtilHelper::showStartAppAd(2);
+        }
     }
 }

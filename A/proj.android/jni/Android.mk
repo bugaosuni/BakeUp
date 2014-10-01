@@ -10,7 +10,6 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/Base.cpp \
 				   ../../Classes/scene/SplashScene.cpp \
-				   ../../Classes/scene/MainScene.cpp \
 				   ../../Classes/scene/SelectMapScene.cpp \
 				   ../../Classes/scene/SelectCarScene.cpp \
 				   ../../Classes/scene/UpgradeCarScene.cpp \
@@ -19,7 +18,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
 				   ../../Classes/dialog/SettingsDialog.cpp \
 				   ../../Classes/dialog/ConfirmDialog.cpp \
 				   ../../Classes/dialog/GameOverDialog.cpp \
-                   ../../Classes/dialog/ExitDialog.cpp \
+				   ../../Classes/dialog/AchievementDialog.cpp \
+				   ../../Classes/dialog/DailyTaskDialog.cpp \
 				   ../../Classes/utils/UtilHelper.cpp \
 				   ../../Classes/utils/HttpClientMgr.cpp \
 				   ../../Classes/utils/VisibleRect.cpp \

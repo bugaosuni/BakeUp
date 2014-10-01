@@ -24,6 +24,7 @@ GameScene::GameScene()
     m_nWheellLevel = 0;
     m_nMapId = 0;
     m_nCarId = 0;
+    m_ReachLevel = 1;
 
     m_fPressPedalTime = 0.0f;
     m_fRearWheelSpeed = 0.0f;
@@ -42,6 +43,8 @@ GameScene::GameScene()
     m_pBestDistanceLable = NULL;
     m_pCoinLable = NULL;
     m_pFuelLowSprite = NULL;
+    m_pLalbeLevel = NULL;
+    m_pLableLevelCoins = NULL;
 
     m_pCarBody = NULL;
     m_pRearWheelBody = NULL;
@@ -158,10 +161,6 @@ void GameScene::setupStarAndEndPoint()
     //创建关联  
     groundBody->CreateFixture(&boxShapeDef);  
 
-    //终点  
-    groundBox.Set(b2Vec2(1020.0f, VisibleRect::top().y / PTM_RATIO), b2Vec2(1020.0f , 0.0f));  
-    //创建关联  
-    groundBody->CreateFixture(&boxShapeDef);  
 }
 
 void GameScene::initShape()
@@ -192,7 +191,7 @@ void GameScene::initUI()
     setLabelText(m_pCoinLable, m_nTotalCoins);
     
     m_pDistanceLable = Helper::seekWidgetByName(m_view, "BitmapLabel_Dist");
-    setLabelText(m_pDistanceLable, "0m/1000m");
+    setLabelText(m_pDistanceLable, "0m/" + String::createWithFormat("%d",400 *m_ReachLevel)->_string + "m");
 
     m_pBestDistanceLable = Helper::seekWidgetByName(m_view, "BitmapLabel_Best");
     setLabelText(m_pBestDistanceLable, String::createWithFormat("%d",m_nBestDistance)->_string + "m");
@@ -218,8 +217,13 @@ void GameScene::initUI()
 
     m_pFuelLowSprite = Helper::seekWidgetByName(m_view, "Image_Fuel_Low");
 
+    m_pLalbeLevel = Helper::seekWidgetByName(m_view, "BitmapLabel_Level");
+    m_pLableLevelCoins = Helper::seekWidgetByName(m_view, "BitmapLabel_AddCoins");
+
     // 固定时间减少油，不能放在update里面
-    schedule( schedule_selector(GameScene::consumGas), 1.0f); 
+    schedule( schedule_selector(GameScene::consumGas), 1.0f);
+    
+    
 }
 
 void GameScene::initMap()
@@ -505,13 +509,13 @@ void GameScene::update(float dt)
     }
     m_pTerrainView->setScale(0.8); */
     //this->mapTestOffset();
-    if (m_nCurrentDistance < 998)
+    if (m_nCurrentDistance < 4800)
     {
         m_pTerrainView->setOffsetX(Vec2(m_pCarBody->GetPosition().x - 5,m_pCarBody->GetPosition().y));
     }
     else
     {
-        m_nCurrentDistance = 1000;
+        m_nCurrentDistance = 4800;
         m_overtype = MAP_COMPLETE;
         m_bIsGameOver = true;
         scheduleOnce( schedule_selector(GameScene::gameOver), 1.0f);
@@ -520,6 +524,7 @@ void GameScene::update(float dt)
     this->pickUpItems();
     this->updateLables();
     this->updateNeedleRotation();
+    this->levelCoinTips();
 }
 
 void GameScene::brakeCallback(Ref* sender,TouchEventType type)
@@ -725,7 +730,8 @@ void GameScene::updateNeedleRotation()
 
 void GameScene::updateLables()
 {
-    setLabelText(m_pDistanceLable, String::createWithFormat("%d",m_nCurrentDistance)->_string +"m/1000m");
+    setLabelText(m_pDistanceLable, String::createWithFormat("%d",m_nCurrentDistance)->_string +"m/" 
+            + String::createWithFormat("%d",400 *m_ReachLevel)->_string + "m");
     setLabelText(m_pCoinLable, m_nTotalCoins);
     if (m_nCurrentDistance > m_nBestDistance)
     {
@@ -737,7 +743,16 @@ void GameScene::updateLables()
 
 void GameScene::gameOver(float dt)
 {
+    this->unscheduleAllSelectors();
     UtilHelper::writeToInteger(OVER_COUNT, UtilHelper::getFromInteger(OVER_COUNT) + 1);
+
+    // 每日任务
+    UtilHelper::getResetTimes();
+    UtilHelper::writeToInteger(TODAY_COUNT, UtilHelper::getFromInteger(TODAY_COUNT) + 1);
+    if (m_nCurrentDistance > UtilHelper::getFromInteger(TODAY_DISTANCE))
+    {
+        UtilHelper::writeToInteger(TODAY_DISTANCE, m_nCurrentDistance);
+    }
 
     // start app的广告
     if (UtilHelper::getFromInteger(OVER_COUNT) % UtilHelper::getFromInteger(START_APP) == 0)
@@ -752,8 +767,6 @@ void GameScene::gameOver(float dt)
             umeng::MobClickCpp::event("user_rate");
 #endif
     }
-
-    this->unscheduleAllSelectors();
     UtilHelper::writeToInteger(USER_GOLD, m_nTotalCoins);
     UtilHelper::writeMapData(DataMgr::mapIndex + 1, e_bestDist, m_nBestDistance);
     DataMgr::getInstance()->setMapData(DataMgr::mapIndex , e_bestDist, m_nBestDistance);
@@ -880,10 +893,10 @@ void GameScene::addGas(Ref* sender, int gas)
 
 void GameScene::mapTestOffset()
 {
-    m_fTestMapOffset += 0.2;
+    m_fTestMapOffset += 0.4;
     m_nGas += 1;
     m_nCurrentDistance = m_fTestMapOffset;
-    if (m_fTestMapOffset < 1000)
+    if (m_fTestMapOffset < 5000)
     {
         m_pTerrainView->setOffsetX(Vec2(m_fTestMapOffset,0));
     }
@@ -940,4 +953,42 @@ void GameScene::gasLowTips()
                                                //RemoveSelf::create(),
                                                NULL);
     m_pFuelLowSprite->runAction(fuel_low_action);
+}
+
+void GameScene::levelCoinTips()
+{
+    int level = m_nCurrentDistance / (400);
+    if (m_ReachLevel == level)
+    {
+        m_pLalbeLevel->setVisible(true);
+        setLabelText(m_pLalbeLevel,"Level "  + String::createWithFormat("%d",level)->_string + ": Reach " 
+            + String::createWithFormat("%d",level * 400)->_string + "m");
+        auto level_action = Sequence::create( 
+                                        FadeIn::create(1.0f),
+                                        FadeOut::create(1.0f),
+                                        FadeIn::create(1.0f),
+                                        FadeOut::create(1.0f),
+                                        FadeIn::create(1.0f),
+                                        FadeOut::create(1.0f),
+                                        NULL);
+        m_pLalbeLevel->runAction(level_action);
+
+        m_pLableLevelCoins->setVisible(true);
+        setLabelText(m_pLableLevelCoins, "+" + String::createWithFormat("%d",level * 1000)->_string + " Coins");
+        auto coins_action = Sequence::create( 
+                                               FadeIn::create(1.0f),
+                                               FadeOut::create(1.0f),
+                                               FadeIn::create(1.0f),
+                                               FadeOut::create(1.0f),
+                                               FadeIn::create(1.0f),
+                                               FadeOut::create(1.0f),
+                                               NULL);
+        m_pLableLevelCoins->runAction(coins_action);
+        
+        m_nCurrentCoins += level * 1000;
+        m_nTotalCoins += level * 1000;
+
+        m_ReachLevel++;
+    }
+
 }

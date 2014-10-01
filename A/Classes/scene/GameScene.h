@@ -80,6 +80,8 @@ private:
     
     void gasLowTips();
     
+    void levelCoinTips();
+    
     CREATE_FUNC(GameScene);
 
     virtual void onKeyReleased(EventKeyboard::KeyCode keycode, Event* event);
@@ -96,6 +98,9 @@ private:
     int m_nEngineLevel;
     int m_nSuspensionLevel;
     int m_nWheellLevel;
+    int m_ReachLevel;
+    
+    
 
 
     float m_fPressPedalTime;
@@ -115,6 +120,9 @@ private:
     Widget* m_pBestDistanceLable;
     Widget* m_pCoinLable;
     Widget* m_pFuelLowSprite;
+
+    Widget* m_pLalbeLevel;
+    Widget* m_pLableLevelCoins;
 
     b2Body* m_pCarBody;
     b2Body* m_pRearWheelBody;

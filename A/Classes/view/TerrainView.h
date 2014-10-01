@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-#define kMaxHillKeyPoints 200
+#define kMaxHillKeyPoints 510
 #define kHillSegmentWidth 10
 #define kMaxHillVertices 10000
 #define kMaxBorderVertices 2000

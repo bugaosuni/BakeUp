@@ -135,13 +135,13 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Base.cpp" />
+    <ClCompile Include="..\Classes\dialog\AchievementDialog.cpp" />
     <ClCompile Include="..\Classes\dialog\ConfirmDialog.cpp" />
-    <ClCompile Include="..\Classes\dialog\ExitDialog.cpp" />
+    <ClCompile Include="..\Classes\dialog\DailyTaskDialog.cpp" />
     <ClCompile Include="..\Classes\dialog\GameOverDialog.cpp" />
     <ClCompile Include="..\Classes\dialog\PauseDialog.cpp" />
     <ClCompile Include="..\Classes\dialog\SettingsDialog.cpp" />
     <ClCompile Include="..\Classes\scene\GameScene.cpp" />
-    <ClCompile Include="..\Classes\Scene\MainScene.cpp" />
     <ClCompile Include="..\Classes\scene\SelectCarScene.cpp" />
     <ClCompile Include="..\Classes\scene\SelectMapScene.cpp" />
     <ClCompile Include="..\Classes\scene\SplashScene.cpp" />
@@ -160,13 +160,13 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Base.h" />
+    <ClInclude Include="..\Classes\dialog\AchievementDialog.h" />
     <ClInclude Include="..\Classes\dialog\ConfirmDialog.h" />
-    <ClInclude Include="..\Classes\dialog\ExitDialog.h" />
+    <ClInclude Include="..\Classes\dialog\DailyTaskDialog.h" />
     <ClInclude Include="..\Classes\dialog\GameOverDialog.h" />
     <ClInclude Include="..\Classes\dialog\PauseDialog.h" />
     <ClInclude Include="..\Classes\dialog\SettingsDialog.h" />
     <ClInclude Include="..\Classes\scene\GameScene.h" />
-    <ClInclude Include="..\Classes\Scene\MainScene.h" />
     <ClInclude Include="..\Classes\scene\SelectCarScene.h" />
     <ClInclude Include="..\Classes\scene\SelectMapScene.h" />
     <ClInclude Include="..\Classes\scene\SplashScene.h" />

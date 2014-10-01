@@ -71,9 +71,12 @@ void SelectCarScene::initUI()
     m_labelGold = Helper::seekWidgetByName(m_view, "BitmapLabel_Gold");
     setLabelText(m_labelGold, UtilHelper::getFromInteger(USER_GOLD));
 
-    //add
-    auto buttonAdd = Helper::seekWidgetByName(m_view, "Button_Add");
-    buttonAdd->addTouchEventListener(this, toucheventselector(SelectCarScene::addCallback));
+    //daily task
+    auto buttonDailyTask = Helper::seekWidgetByName(m_view, "Button_DailyTask");
+    buttonDailyTask->addTouchEventListener(this, toucheventselector(SelectCarScene::dailyTaskCallback));
+
+    auto achievementTask = Helper::seekWidgetByName(m_view, "Button_Achievement");
+    achievementTask->addTouchEventListener(this, toucheventselector(SelectCarScene::achievementCallback));
 
     //settings
     auto buttonSettings = Helper::seekWidgetByName(m_view, "Button_Settings");

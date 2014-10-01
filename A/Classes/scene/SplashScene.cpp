@@ -1,6 +1,6 @@
 #include "SplashScene.h"
 #include "DataMgr.h"
-#include "MainScene.h"
+#include "SelectMapScene.h"
 #include "UtilHelper.h"
 
 Scene* SplashScene::createScene()
@@ -44,5 +44,5 @@ void SplashScene::initUI()
 
 void SplashScene::gotoGame()
 {
-	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, MainScene::createScene()));
+	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, SelectMapScene::createScene()));
 }

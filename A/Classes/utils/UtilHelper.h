@@ -260,6 +260,37 @@ struct ConfData
     }
 };
 
+struct DailyTask
+{
+    int			conis; // 奖励金币数量
+    int         type; // 0局数 1 距离
+    int		    target; // 目标
+    int         receive; // 是否领取奖励
+    DailyTask()
+    {
+        conis = 0;
+        type = 0;
+        target = 0;
+        receive = 0;
+    }
+};
+
+struct Achievement
+{
+    int			conis; // 奖励金币数量
+    int         type; // 0局数 1 距离
+    int		    target; // 目标
+    int         receive; // 是否领取奖励
+    Achievement()
+    {
+        conis = 0;
+        type = 0;
+        target = 0;
+        receive = 0;
+    }
+};
+
+
 class UtilHelper
 {
 public:
@@ -270,10 +301,14 @@ public:
     static bool screenShoot();
     static bool writeMapDataToSD();
     static bool writeCarDataToSD();
+    static bool writeDailyTaskDataToSD();
+    static bool writeAchievementDataToSD();
     static map<string, string> readTextData();
     static vector<MapData> readMapData();
     static bool writeMapData(int mapid, MapModType modType, int modData);
     static bool writeCarData(int carid, CarModType modType, int modData);
+    static bool writeDailyTaskData(int taskid);
+    static bool writeAchievementData(int taskid);
     static vector<CarData> readCarData();
     static map<int, vector<PartCost>> readPartCostData();
     static vector<MapPoints> readMapPointsData(int mapId);
@@ -294,6 +329,9 @@ public:
     static double getFromDouble(const char* key);
     static bool getFromBool(const char* key);
     static void flushData();
+    static string getResetTimes();
+    static vector<DailyTask> readDailyTaskData();
+    static vector<Achievement> readAchievementData();
 };
 
 #endif /* __UTILHELPER_H__ */

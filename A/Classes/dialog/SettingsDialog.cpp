@@ -29,7 +29,7 @@ bool SettingsDialog::init()
         return false;
     }
 
-    m_view = GUIReader::getInstance()->widgetFromJsonFile("UI/SettingDialog.ExportJson");
+    m_view = GUIReader::getInstance()->widgetFromJsonFile("UI/SettingsDialog.ExportJson");
     this->addChild(m_view);
 
     initUI();
@@ -39,26 +39,26 @@ bool SettingsDialog::init()
 void SettingsDialog::initUI()
 {
     //music
-    m_buttonMusic = Helper::seekWidgetByName(m_view, "Button_Music");
+    m_buttonMusic = Helper::seekWidgetByName(m_view, "Image_MusicOn");
     m_buttonMusic->addTouchEventListener(this, toucheventselector(SettingsDialog::musicCallback));
     m_buttonMusic->setVisible(!UtilHelper::getFromBool(MUSIC_OFF));
 
     //musicoff
-    m_buttonMusicOff = Helper::seekWidgetByName(m_view, "Button_Music_Off");
+    m_buttonMusicOff = Helper::seekWidgetByName(m_view, "Image_MusicOff");
     m_buttonMusicOff->addTouchEventListener(this, toucheventselector(SettingsDialog::musicCallback));
     m_buttonMusicOff->setVisible(UtilHelper::getFromBool(MUSIC_OFF));
 
     //sound
-    m_buttonSound = Helper::seekWidgetByName(m_view, "Button_Sound");
+    m_buttonSound = Helper::seekWidgetByName(m_view, "Image_SoundOn");
     m_buttonSound->addTouchEventListener(this, toucheventselector(SettingsDialog::soundCallback));
     m_buttonSound->setVisible(!UtilHelper::getFromBool(SOUND_OFF));
 
     //soundoff
-    m_buttonSoundOff = Helper::seekWidgetByName(m_view, "Button_Sound_Off");
+    m_buttonSoundOff = Helper::seekWidgetByName(m_view, "Image_SoundOff");
     m_buttonSoundOff->addTouchEventListener(this, toucheventselector(SettingsDialog::soundCallback));
     m_buttonSoundOff->setVisible(UtilHelper::getFromBool(SOUND_OFF));
 
-    auto buttonClose = Helper::seekWidgetByName(m_view, "Button_Close");
+    auto buttonClose = Helper::seekWidgetByName(m_view, "Button_OK");
     buttonClose->addTouchEventListener(this, toucheventselector(SettingsDialog::closeCallback));
 }
 

@@ -24,7 +24,6 @@ private:
 	string m_info;
 	Ref* m_callbackTarget;
 	SEL_CallFunc m_callbackFunc;
-	Widget* m_tips;
 };
 
 #endif // __CONFIRM_DIALOG_H__

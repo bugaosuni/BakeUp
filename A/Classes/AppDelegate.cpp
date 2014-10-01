@@ -1,6 +1,5 @@
-#include "AppDelegate.h"
+﻿#include "AppDelegate.h"
 #include "SplashScene.h"
-#include "MainScene.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "MobClickCpp.h"

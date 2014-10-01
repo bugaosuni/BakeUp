@@ -6,7 +6,6 @@
 bool DataMgr::modalShow = false;
 int DataMgr::mapIndex = 0;
 int DataMgr::carIndex = 0;
-bool DataMgr::bIsSpalshEnter = true;
 bool DataMgr::bIsGameScene = false;
 bool DataMgr::bIsPause =false;
 
@@ -34,7 +33,8 @@ bool DataMgr::initGameData()
 
     if (!UtilHelper::getFromBool(WRITE_DATA))
     {
-        if (UtilHelper::writeMapDataToSD() && UtilHelper::writeCarDataToSD())
+        if (UtilHelper::writeMapDataToSD() && UtilHelper::writeCarDataToSD() 
+                && UtilHelper::writeDailyTaskDataToSD() && UtilHelper::writeAchievementDataToSD())
         {
             UtilHelper::writeToInteger(USER_GOLD, 2000);
             UtilHelper::writeToBool(WRITE_DATA, true);
@@ -64,6 +64,8 @@ bool DataMgr::initGameData()
     m_partCostData = UtilHelper::readPartCostData();
     m_carInfos = UtilHelper::readCarInfoData();
     m_carLevels = UtilHelper::readCarLevelData();
+   // m_dailyTasks = UtilHelper::readDailyTaskData();
+    
     AudioEnginMgr::getInstance()->initMusic();
     return true;
 }
@@ -77,6 +79,11 @@ vector<MapData> DataMgr::getMapData()
 {
     return m_mapData;
 }
+
+/*vector<DailyTask> DataMgr::getDailyTaskData()
+{
+    return m_dailyTasks;
+}*/
 
 void DataMgr::setMapData(int index, MapModType modType, int modData)
 {
@@ -143,58 +150,14 @@ vector<CarLevel> DataMgr::getCarLevelData()
 float DataMgr::getWheelFriction(int carId, int wheel_level)
 {
     float friction;
-    switch (wheel_level)
-        {
-        case 1:
-            friction = m_carLevels[carId-1].wheel_friction1;
-            break;
-
-        case 2:
-            friction = m_carLevels[carId-1].wheel_friction2;
-            break;
-
-        case 3:
-            friction = m_carLevels[carId-1].wheel_friction3;
-            break;
-
-        case 4:
-            friction = m_carLevels[carId-1].wheel_friction4;;
-            break;
-        case 5:
-            friction = m_carLevels[carId-1].wheel_friction5;
-            break;
-        default:
-            friction = m_carLevels[carId-1].wheel_friction5;
-        }
+    friction = m_carLevels[carId-1].wheel_friction1 + (float)wheel_level * 0.05;
     return friction;
 }
 
 float DataMgr::getRearSpeed(int carId, int engine_level)
 {
     float rear_speed;
-    switch (engine_level)
-        {
-        case 1:
-            rear_speed = m_carLevels[carId-1].rear_speed1;
-            break;
-
-        case 2:
-            rear_speed = m_carLevels[carId-1].rear_speed2;
-            break;
-
-        case 3:
-            rear_speed = m_carLevels[carId-1].rear_speed3;
-            break;
-
-        case 4:
-            rear_speed = m_carLevels[carId-1].rear_speed4;;
-            break;
-        case 5:
-            rear_speed = m_carLevels[carId-1].rear_speed5;
-            break;
-        default:
-            rear_speed = m_carLevels[carId-1].rear_speed5;
-        }
+    rear_speed = m_carLevels[carId-1].rear_speed1 + engine_level * 10;
     return rear_speed;
 }
 
@@ -202,57 +165,14 @@ float DataMgr::getRearSpeed(int carId, int engine_level)
 float DataMgr::getFrontSpeed(int carId, int frontWheelDriveLevel)
 {
     float frontSpeed;
-    switch (frontWheelDriveLevel)
-        {
-        case 1:
-            frontSpeed = m_carLevels[carId-1].front_speed1;
-            break;
-
-        case 2:
-            frontSpeed = m_carLevels[carId-1].front_speed2;
-            break;
-
-        case 3:
-            frontSpeed = m_carLevels[carId-1].front_speed3;
-            break;
-
-        case 4:
-            frontSpeed = m_carLevels[carId-1].front_speed4;;
-            break;
-        case 5:
-            frontSpeed = m_carLevels[carId-1].front_speed5;
-            break;
-        default:
-            frontSpeed = m_carLevels[carId-1].front_speed5;
-        }
+    frontSpeed = m_carLevels[carId-1].front_speed1 + 5 * frontWheelDriveLevel;
     return frontSpeed;
 }
 
 float DataMgr::getWheelDensity(int carId, int suspensionLevel)
 {
     float wheelDensity;
-    switch (suspensionLevel)
-        {
-        case 1:
-            wheelDensity = m_carLevels[carId-1].suspension_level1;
-            break;
-
-        case 2:
-            wheelDensity = m_carLevels[carId-1].suspension_level2;
-            break;
-
-        case 3:
-            wheelDensity = m_carLevels[carId-1].suspension_level3;
-            break;
-
-        case 4:
-            wheelDensity = m_carLevels[carId-1].suspension_level4;;
-            break;
-        case 5:
-            wheelDensity = m_carLevels[carId-1].suspension_level5;
-            break;
-        default:
-            wheelDensity = m_carLevels[carId-1].suspension_level5;
-        }
+    wheelDensity = m_carLevels[carId-1].suspension_level1 + (float)suspensionLevel * 0.2;
+    
     return wheelDensity;
 }

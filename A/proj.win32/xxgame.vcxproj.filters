@@ -33,9 +33,6 @@
     <ClCompile Include="..\Classes\Base.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Scene\MainScene.cpp">
-      <Filter>Classes\scene</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Utils\UtilHelper.cpp">
       <Filter>Classes\utils</Filter>
     </ClCompile>
@@ -84,14 +81,17 @@
     <ClCompile Include="..\Classes\dialog\GameOverDialog.cpp">
       <Filter>Classes\dialog</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\dialog\ExitDialog.cpp">
-      <Filter>Classes\dialog</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\utils\AudioEnginMgr.cpp">
       <Filter>Classes\utils</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\utils\HttpClientMgr.cpp">
       <Filter>Classes\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\dialog\DailyTaskDialog.cpp">
+      <Filter>Classes\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\dialog\AchievementDialog.cpp">
+      <Filter>Classes\dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +103,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Base.h">
       <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Scene\MainScene.h">
-      <Filter>Classes\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Utils\UtilHelper.h">
       <Filter>Classes\utils</Filter>
@@ -158,14 +155,17 @@
     <ClInclude Include="..\Classes\dialog\GameOverDialog.h">
       <Filter>Classes\dialog</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\dialog\ExitDialog.h">
-      <Filter>Classes\dialog</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\utils\AudioEnginMgr.h">
       <Filter>Classes\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\utils\HttpClientMgr.h">
       <Filter>Classes\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\dialog\DailyTaskDialog.h">
+      <Filter>Classes\dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\dialog\AchievementDialog.h">
+      <Filter>Classes\dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
