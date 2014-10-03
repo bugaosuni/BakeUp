@@ -509,13 +509,13 @@ void GameScene::update(float dt)
     }
     m_pTerrainView->setScale(0.8); */
     //this->mapTestOffset();
-    if (m_nCurrentDistance < 4800)
+    if (m_nCurrentDistance < 4400)
     {
         m_pTerrainView->setOffsetX(Vec2(m_pCarBody->GetPosition().x - 5,m_pCarBody->GetPosition().y));
     }
     else
     {
-        m_nCurrentDistance = 4800;
+        m_nCurrentDistance = 4400;
         m_overtype = MAP_COMPLETE;
         m_bIsGameOver = true;
         scheduleOnce( schedule_selector(GameScene::gameOver), 1.0f);
@@ -753,6 +753,10 @@ void GameScene::gameOver(float dt)
     {
         UtilHelper::writeToInteger(TODAY_DISTANCE, m_nCurrentDistance);
     }
+    if (m_nCurrentDistance > UtilHelper::getFromInteger(BEST_DISTANCE))
+    {
+        UtilHelper::writeToInteger(BEST_DISTANCE, m_nCurrentDistance);
+    }
 
     // start app的广告
     if (UtilHelper::getFromInteger(OVER_COUNT) % UtilHelper::getFromInteger(START_APP) == 0)
@@ -893,7 +897,7 @@ void GameScene::addGas(Ref* sender, int gas)
 
 void GameScene::mapTestOffset()
 {
-    m_fTestMapOffset += 0.4;
+    m_fTestMapOffset += 0.3;
     m_nGas += 1;
     m_nCurrentDistance = m_fTestMapOffset;
     if (m_fTestMapOffset < 5000)

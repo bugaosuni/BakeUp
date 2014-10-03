@@ -10,35 +10,10 @@
   "designHeight": 576,
   "designWidth": 1024,
   "textures": [
-    "AUi0.plist",
-    "AUi1.plist",
-    "AUi2.plist"
+    "1.plist"
   ],
   "texturesPng": [
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png"
+    "1.png"
   ],
   "version": "1.6.0.0",
   "widgetTree": {
@@ -320,14 +295,14 @@
               "rotation": 0,
               "scaleX": 1,
               "scaleY": 1,
-              "sizePercentX": 0.296875,
+              "sizePercentX": 0.27734375,
               "sizePercentY": 0.8117647,
               "sizeType": 0,
               "tag": 1180,
               "touchAble": false,
               "useMergedTexture": true,
               "visible": true,
-              "width": 304,
+              "width": 284,
               "x": 512,
               "y": 42,
               "fileNameData": {
@@ -335,7 +310,7 @@
                 "plistFile": "",
                 "resourceType": 0
               },
-              "text": "Select Map"
+              "text": "Select Car"
             }
           },
           {

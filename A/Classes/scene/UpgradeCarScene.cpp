@@ -66,6 +66,8 @@ void UpgradeCarScene::onKeyReleased(EventKeyboard::KeyCode keycode, Event* event
 }
 void UpgradeCarScene::initUI()
 {
+    auto bitmapLabelTitle = Helper::seekWidgetByName(m_view, "BitmapLabel_Title");
+    setLabelText(bitmapLabelTitle, DataMgr::getInstance()->getTextData()["upgrade_title"].c_str());
 
     //label gold
     m_labelGold = Helper::seekWidgetByName(m_view, "BitmapLabel_Gold");

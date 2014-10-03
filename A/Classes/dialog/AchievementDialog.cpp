@@ -80,7 +80,7 @@ void AchievementDialog::initUI()
         else
         {
             desc = " reach " + String::createWithFormat("%d",achievements[i].target)->_string +"m";
-            if (UtilHelper::getFromInteger(TODAY_DISTANCE) >= achievements[i].target)
+            if (UtilHelper::getFromInteger(BEST_DISTANCE) >= achievements[i].target)
             {
                 isComplete = true;
             }
@@ -88,7 +88,7 @@ void AchievementDialog::initUI()
             {
                 isComplete = false;
             }
-            progress = String::createWithFormat("%d", UtilHelper::getFromInteger(TODAY_DISTANCE))->_string;
+            progress = String::createWithFormat("%d", UtilHelper::getFromInteger(BEST_DISTANCE))->_string;
         }
 
         progress += "/" + String::createWithFormat("%d",achievements[i].target)->_string;

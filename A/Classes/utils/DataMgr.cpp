@@ -8,6 +8,7 @@ int DataMgr::mapIndex = 0;
 int DataMgr::carIndex = 0;
 bool DataMgr::bIsGameScene = false;
 bool DataMgr::bIsPause =false;
+bool DataMgr::bIsShowDailyTask = false;
 
 DataMgr* DataMgr::pInstance = new DataMgr();
 
@@ -30,7 +31,6 @@ DataMgr* DataMgr::getInstance()
 bool DataMgr::initGameData()
 {
     HttpClientMgr::getInstance()->ReadHttpFile( HttpClientMgr::getInstance()->m_sUrlPre + "conf.json", "conf.json");
-
     if (!UtilHelper::getFromBool(WRITE_DATA))
     {
         if (UtilHelper::writeMapDataToSD() && UtilHelper::writeCarDataToSD() 

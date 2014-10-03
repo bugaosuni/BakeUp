@@ -15,3 +15,4 @@
 #define NOW_DAY         "now_day"
 #define TODAY_COUNT     "today_count"
 #define TODAY_DISTANCE  "today_distance"
+#define BEST_DISTANCE   "best_distance"

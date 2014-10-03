@@ -10,7 +10,7 @@
 #define CRACK_EFFECT_MUSIC "music/crack.ogg"
 
 #define BACKGROUND_MUSIC "music/background.ogg"
-#define GAME_BACKGROUND_MUSIC "music/gameBgm.ogg"
+#define GAME_BACKGROUND_MUSIC "music/background.ogg"
 
 
 class AudioEnginMgr

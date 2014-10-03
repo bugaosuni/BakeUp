@@ -28,6 +28,7 @@ public:
     static int carIndex;
     static bool bIsGameScene;
     static bool bIsPause;
+    static bool bIsShowDailyTask;
 
     static DataMgr* getInstance();
     bool initGameData();

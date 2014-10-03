@@ -10,26 +10,10 @@
   "designHeight": 576,
   "designWidth": 1024,
   "textures": [
-    "AUi0.plist",
-    "AUi1.plist",
-    "AUi2.plist"
+    "1.plist"
   ],
   "texturesPng": [
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png",
-    "AUi0.png",
-    "AUi1.png",
-    "AUi2.png"
+    "1.png"
   ],
   "version": "1.6.0.0",
   "widgetTree": {
@@ -143,7 +127,7 @@
                 "layoutParentHorizontal": 0,
                 "layoutParentVertical": 0,
                 "marginDown": 0,
-                "marginLeft": 10,
+                "marginLeft": 0,
                 "marginRight": 0,
                 "marginTop": 0,
                 "relativeName": "BitmapLabel_Dist",
@@ -151,7 +135,7 @@
                 "type": 2
               },
               "opacity": 255,
-              "positionPercentX": 0.0607843176,
+              "positionPercentX": 0.0509803966,
               "positionPercentY": 0.8233333,
               "positionType": 0,
               "rotation": 0,
@@ -165,7 +149,7 @@
               "useMergedTexture": true,
               "visible": true,
               "width": 143,
-              "x": 62,
+              "x": 52,
               "y": 123,
               "fileNameData": {
                 "path": "font/number_24.fnt",
@@ -215,7 +199,7 @@
                 "type": 2
               },
               "opacity": 255,
-              "positionPercentX": 0.2735294,
+              "positionPercentX": 0.2637255,
               "positionPercentY": 0.8233333,
               "positionType": 0,
               "rotation": 0,
@@ -229,7 +213,7 @@
               "useMergedTexture": true,
               "visible": true,
               "width": 48,
-              "x": 279,
+              "x": 269,
               "y": 123,
               "capInsetsHeight": 1,
               "capInsetsWidth": 1,
@@ -286,7 +270,7 @@
                 "type": 2
               },
               "opacity": 255,
-              "positionPercentX": 0.3019608,
+              "positionPercentX": 0.292156875,
               "positionPercentY": 0.8233333,
               "positionType": 0,
               "rotation": 0,
@@ -300,7 +284,7 @@
               "useMergedTexture": true,
               "visible": true,
               "width": 76,
-              "x": 308,
+              "x": 298,
               "y": 123,
               "fileNameData": {
                 "path": "font/number_24.fnt",
@@ -442,7 +426,7 @@
               "capInsetsX": 0,
               "capInsetsY": 0,
               "direction": 0,
-              "percent": 50,
+              "percent": 100,
               "scale9Enable": false,
               "texture": null,
               "textureData": {

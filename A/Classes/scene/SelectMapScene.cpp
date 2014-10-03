@@ -3,6 +3,7 @@
 #include "ConfirmDialog.h"
 #include "UtilHelper.h"
 #include "DataMgr.h"
+#include "DailyTaskDialog.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include <jni.h>
 #include "platform/android/jni/JniHelper.h"
@@ -86,6 +87,15 @@ void SelectMapScene::initUI()
     buttonGo->addTouchEventListener(this, toucheventselector(SelectMapScene::goCallback));
 
     addOwnAds();
+
+    if(!DataMgr::bIsShowDailyTask)
+    {
+        DataMgr::bIsShowDailyTask = true;
+        DailyTaskDialog* dlg = new DailyTaskDialog();
+        dlg->init();
+        this->addChild(dlg, 999);
+        dlg->release();
+    }
 }
 
 void SelectMapScene::initListView()
