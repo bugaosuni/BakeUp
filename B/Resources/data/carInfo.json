@@ -1,0 +1,6 @@
+[["car_id", "whee1_x", "whee1_y", "whee2_x", "whee2_y", "driver_body_x", "driver_body_y", "driver_head_x", "driver_head_y", "linearDamping","wheel_density", "wheel_friction", "wheel_restitution", "wheel1_motorSpeed", "wheel2_motorSpeed", "wheel1_maxMotorTorque", "wheel2_maxMotorTorque", "wheel1_enableMotor", "wheel2_enableMotor", "wheel1_frequencyHz", "wheel2_frequencyHz", "wheel1_dampingRatio", "wheel2_dampingRatio","antenna_x", "antenna_y"],
+[0, 34, -10, 140, -10, 65, 15, 67, 55, 0.2, 2, 0.5, 1, 0, 0, 200, 100, true, false, 4, 4, 0.7, 0.7, 60, 100],
+[1, 48, 0, 185,0, 80, 30, 82, 70, 0.2, 2, 1, 1, 0, 0, 220, 110, true, false, 4, 4, 0.7, 0.7, 50, 90],
+[2, 28, -5, 160, -3, 80, 20, 82, 60, 0.2, 2, 1, 1, 0, 0, 240, 120, true, false, 4, 4, 0.7, 0.7,0, 0],
+[3, 38, -10, 148, -10, 130, 30, 132, 70, 0.2, 2, 0.9, 1, 0, 0, 260, 130, true, false, 4, 4, 0.7, 0.7,200, 100],
+[4, 30, -5, 167, -5, 90, 20, 92, 60, 0.2, 2, 0.7, 0.5, 0, 0, 280, 140, true, false, 4, 4, 0.7, 0.7,70, 70]]
