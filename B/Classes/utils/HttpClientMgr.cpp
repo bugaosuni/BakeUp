@@ -1,7 +1,6 @@
 #include "HttpClientMgr.h"
 #include "DataMgr.h"
 #include <string>
-USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocos2d::network;
 
@@ -135,7 +134,7 @@ void HttpClientMgr::onHttpRequestRptFile(HttpClient *sender, HttpResponse *respo
 	auto adConfData = UtilHelper::readAdConfData();
 	for (int i = 0; i < adConfData.size(); i++)
 	{
-		auto url = "http://www.coolgameworld.com/root/com_gameworld_up_hill_racing/" + adConfData[i].icon;
+		auto url = "http://www.coolgameworld.com/root/com_gamefunny_hill_climb/" + adConfData[i].icon;
 		HttpClientMgr::getInstance()->GetHttpImg(url, adConfData[i].icon);
 	}
 }
@@ -194,7 +193,7 @@ void HttpClientMgr::onHttpRequestReadRptFile(HttpClient *sender, HttpResponse *r
 		{
 			if (!FileUtils::getInstance()->isFileExist(FileUtils::getInstance()->getWritablePath() + adConfDataFromNet[i].icon))
 			{
-				auto url = "http://www.coolgameworld.com/root/com_gameworld_up_hill_racing/" + adConfDataFromNet[i].icon;
+				auto url = "http://www.coolgameworld.com/root/com_gamefunny_hill_climb/" + adConfDataFromNet[i].icon;
 				HttpClientMgr::getInstance()->GetHttpImg(url, adConfDataFromNet[i].icon);
 			}
 		}
@@ -211,7 +210,7 @@ void HttpClientMgr::onHttpRequestReadRptFile(HttpClient *sender, HttpResponse *r
 				needUpdate = true;
 				if (!FileUtils::getInstance()->isFileExist(FileUtils::getInstance()->getWritablePath() + adConfDataFromNet[i].icon))
 				{
-					auto url = "http://www.coolgameworld.com/root/com_gameworld_up_hill_racing/" + adConfDataFromNet[i].icon;
+					auto url = "http://www.coolgameworld.com/root/com_gamefunny_hill_climb/" + adConfDataFromNet[i].icon;
 					HttpClientMgr::getInstance()->GetHttpImg(url, adConfDataFromNet[i].icon);
 				}
 			}

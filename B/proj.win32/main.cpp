@@ -20,8 +20,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	freopen("CONOUT$", "w", stderr);
 #endif // USE_WIN32_CONSOLE
 
-    // create the application instance
-    AppDelegate app;
+	// create the application instance
+	AppDelegate app;
 	return Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE

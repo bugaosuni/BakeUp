@@ -1,16 +1,14 @@
 #include "Base.h"
-#include "SettingsDialog.h"
-#include "DataMgr.h"
 
 Base::Base()
 {
-    m_view = NULL;
+    m_view = nullptr;
+	m_listener = nullptr;
 }
 
 Base::~Base()
 {
     Director::getInstance()->getTextureCache()->removeUnusedTextures();
-    cocos2d::network::HttpClient::destroyInstance();
 }
 
 bool Base::init()
@@ -21,10 +19,7 @@ bool Base::init()
     }
 
     m_listener = EventListenerKeyboard::create(); 
-    
-    AudioEnginMgr::getInstance()->playBackgroundMusic();
-
-    DataMgr::bIsGameScene = false;
+	
     return true;
 }
 
@@ -32,6 +27,11 @@ void Base::onKeyReleased(EventKeyboard::KeyCode keyCode,Event * pEvent)
 { 
     
 } 
+
+Size Base::getWinSize()
+{
+	return Director::getInstance()->getWinSize();
+}
 
 Size Base::getVisableSize()
 {
@@ -90,43 +90,12 @@ void Base::setLabelText(Node* node, int text)
 
 void Base::remove()
 {
-    DataMgr::modalShow = false;
     this->removeFromParentAndCleanup(true);
-}
-
-void Base::settingsCallback(Ref* sender,TouchEventType type)
-{
-    switch (type)
-    {
-    case TOUCH_EVENT_ENDED:
-        {
-            AudioEnginMgr::getInstance()->playBtnEffect();
-            DataMgr::modalShow = true;
-            SettingsDialog* dlg = new SettingsDialog();
-            dlg->init();
-            this->addChild(dlg, 999);
-            dlg->release();
-        }
-        break;
-    default:
-        break;
-    }
-}
-
-void Base::addCallback(Ref* sender,TouchEventType type)
-{
-    switch (type)
-    {
-    case TOUCH_EVENT_ENDED:
-        break;
-    default:
-        break;
-    }
 }
 
 void Base::addOwnAds()
 {
-	auto adConfData = DataMgr::getInstance()->getAdConfData();
+	/*auto adConfData = DataMgr::getInstance()->getAdConfData();
 	auto path = FileUtils::getInstance()->getWritablePath();
 	Vector<MenuItem*> vec;
 	vec.clear();
@@ -152,4 +121,5 @@ void Base::addOwnAds()
 		menu->alignItemsHorizontallyWithPadding(30.0f);
 		this->addChild(menu, 10);
 	}
+	*/
 }

@@ -19,7 +19,6 @@ public:
     CREATE_FUNC(SplashScene);
 
 	void initUI();
-	void gotoGame();
 };
 
 #endif // __UPGRADECAR_SCENE_H__

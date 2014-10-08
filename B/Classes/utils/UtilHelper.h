@@ -6,13 +6,36 @@
 USING_NS_CC;
 using namespace std;
 
-enum MapModType
+enum WorldModType
 {
-    e_map_open	= 3,
-    e_level,
-    e_bestDist
+    e_world_open	= 3
 };
 
+enum LevelModType
+{
+	e_level_open	= 4,
+	e_level_star	= 5
+};
+
+
+struct WorldData
+{
+	int			id;
+	string		name;
+	string		icon;
+	int			open;
+};
+
+struct LevelData
+{
+	int			id;
+	int			world_id;
+	int			level_id;
+	string		icon;
+	int			open;
+	int			star;
+};
+/*
 struct MapData
 {
     int			id;
@@ -236,6 +259,7 @@ struct FileVersion
     }
 };
 
+*/
 struct AdConfData
 {
     string		package;
@@ -243,25 +267,27 @@ struct AdConfData
     int			version;
     AdConfData()
     {
-        package = "com.gameworld.up.hill.racing";
+        package = "";
         icon = "icon1.png";
         version = 1;
     }
 };
-
 class UtilHelper
 {
 public:
-
-    static void updateAdConf(string response);
-    static vector<AdConfData> readAdConfData();
-    static vector<AdConfData> getAdConfDataFromNet(string response);
-    static void showStartAppAd(int type);
-    static void showOwnAds(int type, string pkg);
-    static bool screenShoot();
-    static bool writeMapDataToSD();
-    static bool writeCarDataToSD();
-    static map<string, string> readTextData();
+	static void updateAdConf(string response);
+	static vector<AdConfData> readAdConfData();
+	static vector<AdConfData> getAdConfDataFromNet(string response);
+	static void showStartAppAd(int type);
+	static void showOwnAds(int type, string pkg);
+	static bool isFileExist(string path);
+	static bool writePkgDataToSD(string filename);
+	static vector<WorldData> readWorldData();
+	static bool writeWorldData(int worldId, WorldModType modType, int modData);
+	static map<int, vector<LevelData>> readLevelData();
+	static bool writeLevelData(int worldId, int levelId, WorldModType modType, int modData);
+	static map<string, string> readTextData();
+	/*
     static vector<MapData> readMapData();
     static bool writeMapData(int mapid, MapModType modType, int modData);
     static bool writeCarData(int carid, CarModType modType, int modData);
@@ -272,7 +298,7 @@ public:
     static vector<CarLevel> readCarLevelData();
     static FileVersion readFileVersionData();
     static bool updateMapDate();
-    static bool updateCarDate();
+    static bool updateCarDate();*/
     static void writeToString(const char* key, string value);
     static void writeToInteger(const char* key, int value);
     static void writeToFloat(const char* key, float value);

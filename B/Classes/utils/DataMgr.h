@@ -24,8 +24,10 @@ private:
     static Garbo* garbo;
 public:
     static bool modalShow;
-    static int mapIndex;
-    static int carIndex;
+    static int worldId;
+    static int levelIndex;
+	static int allLevelCount;
+	static int currStarCount;
     static bool bIsSpalshEnter;
     static bool bIsGameScene;
     static bool bIsPause;
@@ -36,29 +38,18 @@ public:
 	void readAdConfData();
 	bool initGameData();
     map<string, string> getTextData();
-    vector<MapData> getMapData();
-    void setMapData(int index, MapModType modType, int modData);
-    vector<CarData> getCarData();
-    void setCarData(int index, CarModType modType, int modData);
-    map<int, vector<PartCost>> getPartCostData();
-
-    vector<CarInfo> getCarInfoData();
-    vector<CarLevel> getCarLevelData();
-    
-    float getRearSpeed(int carId, int engineLevel);
-    float getWheelDensity(int carId, int suspensionLevel);
-    float getWheelFriction(int carId, int wheelLevel);
-    float getFrontSpeed(int carId, int fourWheelDriveLevel);
-    
+    vector<WorldData> getWorldData();
+    void setWorldData(int index, WorldModType modType, int modData);
+	map<int, vector<LevelData>> getLevelData();
+	void setLevelData(int worldId, int index, LevelModType modType, int modData);
+	int getAllCurrStar();
+	int getWorldStar(int worldId);
 
 private:
 	vector<AdConfData> m_adConfData;
     map<string, string> m_textData;
-    vector<MapData> m_mapData;
-    vector<CarData> m_carData;
-    map<int, vector<PartCost>> m_partCostData;
-    vector<CarInfo> m_carInfos;
-    vector<CarLevel> m_carLevels;
+    vector<WorldData> m_worldData;
+    map<int, vector<LevelData>> m_levelData;
 };
 
 #endif // DATA_MGR

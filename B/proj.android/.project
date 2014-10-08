@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>xxgame</name>
+	<name>agame</name>
 	<comment></comment>
 	<projects>
 		<project>libcocos2dx</project>
@@ -117,11 +117,6 @@
 			<name>cocos2d</name>
 			<type>2</type>
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/cocos2d</locationURI>
-		</link>
-		<link>
-			<name>cocos2d-src</name>
-			<type>2</type>
-			<location>E:/project/xxgame/cocos2d/cocos/platform/android/java/src</location>
 		</link>
 		<link>
 			<name>libcocos2d</name>

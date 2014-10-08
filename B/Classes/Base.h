@@ -7,7 +7,6 @@
 #include "VisibleRect.h"
 #include "StringConst.h"
 #include "AudioEnginMgr.h"
-#include "HttpClientMgr.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -23,6 +22,7 @@ public:
 	virtual bool init();
 	virtual void onKeyReleased(EventKeyboard::KeyCode keycode, Event* event);
 
+	Size getWinSize();
 	Size getVisableSize();
 	void setLabelText(Widget* widget, string text);
 	void setLabelText(Widget* widget, int text);
@@ -30,8 +30,6 @@ public:
 	void setLabelText(Node* node, int text);
 	void remove();
 protected:
-	void settingsCallback(Ref* sender,TouchEventType type);
-	void addCallback(Ref* sender,TouchEventType type);
 	void addOwnAds();
 protected:
 	Widget* m_view;

@@ -1,5 +1,6 @@
 #include "UtilHelper.h"
 #include "StringConst.h"
+#include "DataMgr.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
 #include "json/writer.h"
@@ -15,7 +16,7 @@
 extern "C"
 {
     //方法名与java类中的包名+方法名，以下划线连接
-    void Java_com_gameworld_up_hill_racing_AppActivity_rate(JNIEnv*  env, jobject thiz, jboolean a)
+    void Java_com_gamefunny_mountain_racing_AppActivity_rate(JNIEnv*  env, jobject thiz, jboolean a)
     {
         UtilHelper::writeToBool(RATE, a);
     }
@@ -26,7 +27,7 @@ extern "C"
 extern "C"
 {
     //方法名与java类中的包名+方法名，以下划线连接
-    void Java_com_gameworld_up_hill_racing_AppActivity_quit(JNIEnv*  env, jobject thiz, jboolean a)
+    void Java_com_gamefunny_mountain_racing_AppActivity_quit(JNIEnv*  env, jobject thiz, jboolean a)
     {
         umeng::MobClickCpp::end();
         Director::getInstance()->end();
@@ -122,7 +123,7 @@ void UtilHelper::showStartAppAd(int type)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
     JniMethodInfo t;
-    if(JniHelper::getStaticMethodInfo(t, "com/gameworld/up/hill/racing/AppActivity", "showStartAppAd", "(I)V"))
+    if(JniHelper::getStaticMethodInfo(t, "com/gamefunny/mountain/racing/AppActivity", "showStartAppAd", "(I)V"))
     {
 
         t.env->CallStaticVoidMethod(t.classID, t.methodID, type);
@@ -141,10 +142,10 @@ void UtilHelper::showStartAppAd(int type)
 void UtilHelper::showOwnAds(int type, string pkg)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    umeng::MobClickCpp::event("click_ad", pkg.c_str());
+	umeng::MobClickCpp::event("click_ad", pkg.c_str());
 
     JniMethodInfo t;
-    if(JniHelper::getStaticMethodInfo(t, "com/gameworld/up/hill/racing/AppActivity", "showOwnAds", "(ILjava/lang/String;)V"))
+    if(JniHelper::getStaticMethodInfo(t, "com/gamefunny/mountain/racing/AppActivity", "showOwnAds", "(ILjava/lang/String;)V"))
     {
         jstring jmsg = t.env->NewStringUTF(pkg.c_str());
         t.env->CallStaticVoidMethod(t.classID, t.methodID, type, jmsg);
@@ -160,76 +161,298 @@ void UtilHelper::showOwnAds(int type, string pkg)
 #endif
 }
 
-
-bool UtilHelper::screenShoot()
+bool UtilHelper::isFileExist(string path)
 {
-    Size winSize = Director::getInstance()->getWinSize();
-
-    //定义一个屏幕大小的渲染纹理
-    RenderTexture* renderTexture = RenderTexture::create(winSize.width, winSize.height, Texture2D::PixelFormat::RGBA8888);
-
-    Scene* curScene = Director::getInstance()->getRunningScene();
-    //Point ancPos = curScene->getAnchorPoint();
-
-    //渲染纹理开始捕捉
-    renderTexture->begin();
-
-    // 缩小屏幕截屏区域
-    //curScene->setScale(0.5f);
-    //curScene->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
-
-    //绘制当前场景
-    curScene->visit();
-
-    //结束
-    renderTexture->end();
-
-    //保存png
-    renderTexture->saveToFile("screenshoot.png", Image::Format::PNG);
-
-    // 恢复屏幕尺寸
-    //curScene->setScale(1.0f);
-    //curScene->setAnchorPoint(ancPos);
-
-    return true;
+	/*
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	if (!FileUtilsAndroid::getInstance()->isFileExistInternal(path))
+	{
+		log("json file is not find [%s]",path.c_str());  
+		return false;  
+	}
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	if (!FileUtilsWin32::getInstance()->isFileExistInternal(path))
+	{
+		log("json file is not find [%s]",path.c_str());  
+		return false;  
+	}
+#endif
+	*/
+	return true;
 }
 
-bool UtilHelper::writeMapDataToSD()
+bool UtilHelper::writePkgDataToSD(string filename)
 {
-    auto sdpath = FileUtils::getInstance()->getWritablePath();
-    //write map data
-    sdpath.append("map.json");
-    string filename = "data/map.json";
-    auto path = FileUtils::getInstance()->fullPathForFilename(filename);
-    rapidjson::Document doc;
-    doc.SetObject();
-    //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path));
-    {
-        log("json file is not find [%s]",path.c_str());  
-        //return false;  
-    }
-    //读取文件，初始化doc
-    string data = FileUtils::getInstance()->getStringFromFile(path);
-    doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //判断读取成功与否 和 是否为数组类型  
-    if (doc.HasParseError() || !doc.IsArray())  
-    {  
-        log("get json data err!");  
-    }
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    doc.Accept(writer);
-    FILE* file = fopen(sdpath.c_str(), "wb");
-    if (file)
-    {
-        fputs(buffer.GetString(), file);
-        fclose(file);
-        return true;
-    }
-    return false;
+	auto sdpath = FileUtils::getInstance()->getWritablePath();
+	sdpath.append(filename);
+	string _filename = "data/" + filename;
+	auto path = FileUtils::getInstance()->fullPathForFilename(_filename);
+	rapidjson::Document doc;
+	doc.SetObject();
+	//判断文件是否存在
+	if (!isFileExist(path))
+	{
+		return false;
+	}
+	//读取文件，初始化doc
+	string data = FileUtils::getInstance()->getStringFromFile(path);
+	doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
+	//判断读取成功与否 和 是否为数组类型  
+	if (doc.HasParseError() || !doc.IsArray())  
+	{  
+		log("get json data err!");
+		return false;
+	}
+	rapidjson::StringBuffer buffer;
+	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	doc.Accept(writer);
+	FILE* file = fopen(sdpath.c_str(), "wb");
+	if (file)
+	{
+		fputs(buffer.GetString(), file);
+		fclose(file);
+		return true;
+	}
+	return false;
 }
 
+vector<WorldData> UtilHelper::readWorldData()
+{
+	auto path = FileUtils::getInstance()->getWritablePath();
+	path.append("world.json");
+	rapidjson::Document doc;
+	vector<WorldData> worldData;
+	worldData.clear();
+	//判断文件是否存在
+	if (isFileExist(path))
+	{
+		//读取文件，初始化doc
+		string data = FileUtils::getInstance()->getStringFromFile(path);
+		doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
+		//判断读取成功与否 和 是否为数组类型  
+		if (doc.HasParseError() || !doc.IsArray())  
+		{  
+			log("get json data err!"); 
+		}
+		else
+		{
+			//从第2行开始，因为第一行是属性  
+			for(unsigned int i=1;i<doc.Size();i++)
+			{  
+				//逐个提取数组元素（声明的变量必须为引用）  
+				rapidjson::Value &v=doc[i];  
+
+				WorldData data;
+				//按下标提取  
+				int a=0;  
+				data.id=v[a++].GetInt();  
+				data.name=v[a++].GetString();   
+				data.icon=v[a++].GetString();
+				data.open=v[a++].GetInt();  
+
+				worldData.push_back(data);
+			}
+		}
+	}
+	return worldData;
+}
+
+bool UtilHelper::writeWorldData(int worldId, WorldModType modType, int modData)
+{
+	auto path = FileUtils::getInstance()->getWritablePath();
+	path.append("world.json");
+	rapidjson::Document doc;
+	doc.SetObject();
+	//判断文件是否存在
+	if (!isFileExist(path))
+	{
+		return false;  
+	}
+	//读取文件，初始化doc
+	string data = FileUtils::getInstance()->getStringFromFile(path);
+	doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
+	//判断读取成功与否 和 是否为数组类型  
+	if (doc.HasParseError() || !doc.IsArray())  
+	{  
+		log("get json data err!");  
+	}
+	else
+	{
+		//从第2行开始，因为第一行是属性  
+		for(unsigned int i=1;i<doc.Size();i++)
+		{  
+			//按下标提取  
+			int a=0;  
+			auto id=doc[i][a++].GetInt();  
+			if (id == worldId)
+			{
+				doc[i][modType].SetInt(modData);
+				rapidjson::StringBuffer buffer;
+				rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+				doc.Accept(writer);
+				FILE* file = fopen(path.c_str(), "wb");
+				if (file)
+				{
+					fputs(buffer.GetString(), file);
+					fclose(file);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+map<int, vector<LevelData>> UtilHelper::readLevelData()
+{
+	auto path = FileUtils::getInstance()->getWritablePath();
+	path.append("level.json");
+	rapidjson::Document doc;
+	map<int, vector<LevelData>> levelData;
+	levelData.clear();
+	//判断文件是否存在
+	if (isFileExist(path))
+	{
+		//读取文件，初始化doc
+		string data = FileUtils::getInstance()->getStringFromFile(path);
+		doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
+		//判断读取成功与否 和 是否为数组类型  
+		vector<LevelData> levelVec;
+		levelVec.clear();
+		if (doc.HasParseError() || !doc.IsArray())  
+		{  
+			log("get json data err!"); 
+		}
+		else
+		{
+			auto worldId = -1;
+			DataMgr::allLevelCount = doc.Size() - 1;
+			//从第2行开始，因为第一行是属性  
+			for(unsigned int i=1;i<doc.Size();i++)
+			{  
+				//逐个提取数组元素（声明的变量必须为引用）  
+				rapidjson::Value &v=doc[i]; 
+
+				LevelData data;
+
+				//按下标提取  
+				int a=0;  
+				data.id=v[a++].GetInt();
+				data.world_id=v[a++].GetInt();
+				data.level_id=v[a++].GetInt();
+				data.icon=v[a++].GetString();
+				data.open=v[a++].GetInt();
+				data.star=v[a++].GetInt();
+
+				if (data.world_id != worldId)//new
+				{
+					if (i > 1)
+					{
+						levelData[worldId] = levelVec;//save pre
+					}
+					worldId = data.world_id;
+					levelVec.clear();
+					levelVec.push_back(data);
+				}
+				else//old
+				{
+					levelVec.push_back(data);
+				}
+				if (i == doc.Size() - 1)//last line
+				{
+					levelData[worldId] = levelVec;//save curr
+				}
+			}
+		}
+	}
+	return levelData;
+}
+
+bool UtilHelper::writeLevelData(int worldId, int levelId, WorldModType modType, int modData)
+{
+	auto path = FileUtils::getInstance()->getWritablePath();
+	path.append("level.json");
+	rapidjson::Document doc;
+	doc.SetObject();
+	//判断文件是否存在
+	if (!isFileExist(path))
+	{
+		return false;  
+	}
+	//读取文件，初始化doc
+	string data = FileUtils::getInstance()->getStringFromFile(path);
+	doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
+	//判断读取成功与否 和 是否为数组类型  
+	if (doc.HasParseError() || !doc.IsArray())  
+	{  
+		log("get json data err!");  
+	}
+	else
+	{
+		//从第2行开始，因为第一行是属性  
+		for(unsigned int i=1;i<doc.Size();i++)
+		{  
+			//按下标提取  
+			int a=0;  
+			auto id=doc[i][a++].GetInt(); 
+			auto worldid=doc[i][a++].GetInt(); 
+			auto levelid=doc[i][a++].GetInt(); 
+			if (worldid == worldId && levelid == levelId)
+			{
+				doc[i][modType].SetInt(modData);
+				rapidjson::StringBuffer buffer;
+				rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+				doc.Accept(writer);
+				FILE* file = fopen(path.c_str(), "wb");
+				if (file)
+				{
+					fputs(buffer.GetString(), file);
+					fclose(file);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+map<string, string> UtilHelper::readTextData()
+{
+	string filename = "data/text.json";
+	auto path = FileUtils::getInstance()->fullPathForFilename(filename);
+	rapidjson::Document doc;
+	map<string, string> textData;
+	textData.clear();
+	//判断文件是否存在
+	if (isFileExist(path))
+	{
+		//读取文件，初始化doc
+		string data = FileUtils::getInstance()->getStringFromFile(path);
+		doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
+		//判断读取成功与否 和 是否为数组类型  
+		if (doc.HasParseError() || !doc.IsArray())  
+		{  
+			log("get json data err!");  
+		}
+		else
+		{
+			//从第2行开始，因为第一行是属性  
+			for(unsigned int i=1;i<doc.Size();i++)
+			{  
+				//逐个提取数组元素（声明的变量必须为引用）  
+				rapidjson::Value &v=doc[i];  
+
+				//按下标提取  
+				int a=0;
+				auto id = v[a++].GetInt();
+				textData[v[a++].GetString()] = v[a++].GetString();
+			}
+		}
+	}
+	return textData;
+}
+
+/*
 bool UtilHelper::updateMapDate()
 {
     auto sdcardPath = FileUtils::getInstance()->getWritablePath();
@@ -238,7 +461,7 @@ bool UtilHelper::updateMapDate()
     rapidjson::Document oldDoc;
     oldDoc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(sdcardPath));
+    if (!FileUtils::getInstance()->isFileExist(sdcardPath))
     {
         log("json file is not find [%s]",sdcardPath.c_str());  
         //return false;  
@@ -258,7 +481,7 @@ bool UtilHelper::updateMapDate()
     rapidjson::Document newDoc;
     newDoc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(assertPath));
+    if (!FileUtils::getInstance()->isFileExist(assertPath))
     {
         log("json file is not find [%s]",assertPath.c_str());  
         //return false;  
@@ -303,42 +526,6 @@ bool UtilHelper::updateMapDate()
     return false;
 }
 
-bool UtilHelper::writeCarDataToSD()
-{
-    auto sdpath = FileUtils::getInstance()->getWritablePath();
-    //write map data
-    sdpath.append("car.json");
-    string filename = "data/car.json";
-    auto path = FileUtils::getInstance()->fullPathForFilename(filename);
-    rapidjson::Document doc;
-    doc.SetObject();
-    //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path));
-    {
-        log("json file is not find [%s]",path.c_str());  
-        //return false;  
-    }
-    //读取文件，初始化doc
-    string data = FileUtils::getInstance()->getStringFromFile(path);
-    doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //判断读取成功与否 和 是否为数组类型  
-    if (doc.HasParseError() || !doc.IsArray())  
-    {  
-        log("get json data err!");  
-    }
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    doc.Accept(writer);
-    FILE* file = fopen(sdpath.c_str(), "wb");
-    if (file)
-    {
-        fputs(buffer.GetString(), file);
-        fclose(file);
-        return true;
-    }
-    return false;
-}
-
 bool UtilHelper::updateCarDate()
 {
     auto sdcardPath = FileUtils::getInstance()->getWritablePath();
@@ -347,7 +534,7 @@ bool UtilHelper::updateCarDate()
     rapidjson::Document oldDoc;
     oldDoc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(sdcardPath));
+    if (!FileUtils::getInstance()->isFileExist(sdcardPath))
     {
         log("json file is not find [%s]",sdcardPath.c_str());  
         //return false;  
@@ -367,7 +554,7 @@ bool UtilHelper::updateCarDate()
     rapidjson::Document newDoc;
     newDoc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(assertPath));
+    if (!FileUtils::getInstance()->isFileExist(assertPath))
     {
         log("json file is not find [%s]",assertPath.c_str());  
         //return false;  
@@ -415,49 +602,13 @@ bool UtilHelper::updateCarDate()
     return false;
 }
 
-map<string, string> UtilHelper::readTextData()
-{
-    string filename = "data/text.json";
-    auto path = FileUtils::getInstance()->fullPathForFilename(filename);
-    rapidjson::Document doc;
-    //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path));
-    {
-        log("json file is not find [%s]",path.c_str());  
-        //return false;  
-    }
-    //读取文件，初始化doc
-    string data = FileUtils::getInstance()->getStringFromFile(path);
-    doc.Parse<rapidjson::kParseDefaultFlags>(data.c_str());
-    //判断读取成功与否 和 是否为数组类型  
-    if (doc.HasParseError() || !doc.IsArray())  
-    {  
-        log("get json data err!");  
-    }
-
-    map<string, string> textData;
-    textData.clear();
-    //从第2行开始，因为第一行是属性  
-    for(unsigned int i=1;i<doc.Size();i++)
-    {  
-        //逐个提取数组元素（声明的变量必须为引用）  
-        rapidjson::Value &v=doc[i];  
-
-        //按下标提取  
-        int a=0;
-        auto id = v[a++].GetInt();
-        textData[v[a++].GetString()] = v[a++].GetString();
-    }
-    return textData;
-}
-
 vector<MapData> UtilHelper::readMapData()
 {
     auto path = FileUtils::getInstance()->getWritablePath();
     path.append("map.json");
     rapidjson::Document doc;
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path));
+    if (!FileUtils::getInstance()->isFileExist(path))
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
@@ -501,7 +652,7 @@ bool UtilHelper::writeMapData(int mapid, MapModType modType, int modData)
     rapidjson::Document doc;
     doc.SetObject();
     //判断文件是否存在
-    if (!FileUtils::getInstance()->isFileExist(path));
+    if (!FileUtils::getInstance()->isFileExist(path))
     {
         log("json file is not find [%s]",path.c_str());  
         //return false;  
@@ -901,7 +1052,7 @@ FileVersion UtilHelper::readFileVersionData()
     }
     return fileVersion;
 }
-
+*/
 void UtilHelper::writeToString(const char* key, string value)
 {
     UserDefault::getInstance()->setStringForKey(key, value);
